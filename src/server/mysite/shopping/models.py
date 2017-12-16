@@ -9,10 +9,16 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class ShoppingList(models.Model):
@@ -20,8 +26,27 @@ class ShoppingList(models.Model):
     date = models.DateTimeField('date')
     user = models.ForeignKey(User)
 
+    def __str__(self):
+        return self.name
+
 
 class ProductInstances(models.Model):
     shopping_list = models.ForeignKey(ShoppingList)
     product = models.ForeignKey(Product)
     amount = models.IntegerField()
+
+    def __str__(self):
+        return "Product: {}, Amount: {}, List: {}".format(self.product,
+                                                          self.amount,
+                                                          self.shopping_list)
+
+
+class UserData(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    birth_date = models.DateTimeField('date of birth')
+    gender = models.CharField(max_length=2, choices=(("Male", "Male"),
+                                                     ("Female",
+                                                      "Female")))
+    relationship = models.CharField(max_length=2, choices=(("Single", "Single"),
+                                                           ("Not Single",
+                                                            "Not Single")))
