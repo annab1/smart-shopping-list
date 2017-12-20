@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
+import logo from './logo.svg';
 import './App.css';
 import { Provider } from "mobx-react";
-import ShoppingListViewStore from "src/view-stores/ShoppingListViewStore";
-import UsersViewStore from "src/view-stores/UsersViewStore";
+import ShoppingListViewStore from "./view-stores/ShoppingListViewStore";
+import UsersViewStore from "./view-stores/UsersViewStore";
 
 class App extends Component {
     render() {
