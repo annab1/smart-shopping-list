@@ -21,7 +21,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # pycharm
-./idea/*
-./idea/
-./idea
+.idea/*
+.idea/
+.idea
 server/mysite/.idea/
