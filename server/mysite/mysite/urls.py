@@ -17,6 +17,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from shopping.views import get_categories, get_products
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^get/categories/', get_categories),
+    url(r'^get/products/', get_products),
 ]
