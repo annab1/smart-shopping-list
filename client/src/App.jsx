@@ -12,6 +12,8 @@ if (module.hot) {
 
 
 render(
-  <div>Hello</div>,
+  <Provider shoppingListViewStore={ShoppingListViewStore} usersViewStore={UsersViewStore}>
+    <div>Hello</div>
+  </Provider>,
   document.getElementById("wrapper")
 );
