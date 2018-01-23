@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 import { Provider } from "mobx-react";
 import ShoppingListViewStore from "./view-stores/ShoppingListViewStore";
-import UsersViewStore from "./view-stores/UsersViewStore";
-import LoginPage from "./components/LoginPage";
+import UserViewStore from "./view-stores/UserViewStore";
 import { render } from "react-dom";
+import Router from "./components/Router";
 
 if (module.hot) {
   module.hot.accept();
 }
 
 
-render(
-  <Provider shoppingListViewStore={ShoppingListViewStore} usersViewStore={UsersViewStore}>
-    <div>Hello</div>
+render (
+  <Provider shoppingListViewStore={ShoppingListViewStore} userViewStore={UserViewStore}>
+    <Router/>
   </Provider>,
   document.getElementById("wrapper")
 );

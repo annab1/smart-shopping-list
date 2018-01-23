@@ -1,9 +1,10 @@
-import {Component} from "react";
+import React, {Component} from "react";
 
 class ShoppingListPage extends Component {
     render() {
         return (
             <div>
+                Shopping List Page
             </div>
         );
     }
