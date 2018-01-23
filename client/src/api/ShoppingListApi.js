@@ -5,6 +5,11 @@ class ShoppingListApi {
     //TODO
     return Promise.resolve();
   }
+
+  register(user) {
+    //TODO
+    return Promise.resolve();
+  }
 }
 
 export default new ShoppingListApi();
