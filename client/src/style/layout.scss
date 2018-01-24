@@ -1,0 +1,38 @@
+@import "variables";
+
+.page-layout {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: $layout-base-color;
+
+  &:before {
+    content: "";
+    height: 300px;
+    width: 100%;
+    position: absolute;
+    background: $layout-main-color;
+  }
+}
+
+.content-panel {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background-color: #ffffff;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+
+  top: 50px;
+  bottom: 50px;
+  left: 150px;
+  right: 150px;
+  padding: 30px;
+
+  &.small {
+    top: 170px;
+    bottom: 170px;
+    left: 500px;
+    right: 500px;
+  }
+}

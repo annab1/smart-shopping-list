@@ -10,6 +10,11 @@ class ShoppingListApi {
     //TODO
     return Promise.resolve();
   }
+
+  addProduct(product) {
+    //TODO
+    return Promise.resolve();
+  }
 }
 
 export default new ShoppingListApi();

@@ -1,0 +1,13 @@
+@import "variables";
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+
+  > * {
+    display: block;
+    margin-bottom: 15px;
+  }
+}

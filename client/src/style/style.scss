@@ -1,0 +1,61 @@
+@import "reset";
+@import "layout";
+@import "variables";
+@import "pages/login";
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: $text-color;
+  font-size: 16px;
+}
+
+input[type="text"], input[type="password"] {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 16px;
+  height: 37px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 70px;
+  background-color: #f1ebeb;
+  font-size: 25px;
+  line-height: 30px;
+  margin-bottom: 15px;
+  color: #737171;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.btn {
+  cursor: pointer;
+  color: $text-color;
+}
+
+.action-btn {
+  background-color: #ffffff;
+  border-color: $layout-main-color;
+  border-radius: $border-radius;
+  color: $layout-main-color;
+  font-size: 18px;
+  height: 37px;
+
+  &:hover {
+    color: #ffffff;
+    background-color: $layout-main-color;
+  }
+}
+
+.link-btn {
+  border: none;
+  font-size: 16px;
+  color: $layout-main-color;
+}

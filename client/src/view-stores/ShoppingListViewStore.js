@@ -8,22 +8,21 @@ class ShoppingListViewStore {
   @observable currentPage = Pages.Login;
   @observable shoppingList = [];
 
-    constructor() {
-        this._api = ShoppingListApi;
-    }
+  constructor() {
+    this._api = ShoppingListApi;
+  }
 
   @action.bound
   setCurrentPage(page) {
     this.currentPage = page;
   }
 
-    addProduct(productName) {
-        let newProd  = new Product({name: productName});
-        this.shoppingList.push({
-            product : newProd
-        });
-        return this._api.appProduct(productName);
-    }
+  addProduct(productName) {
+    let newProd  = new Product({ name: productName });
+    return this._api.addProduct(newProd).then(action(() => {
+      this.shoppingList.push(newProd);
+    }));
+  }
 
 }
 

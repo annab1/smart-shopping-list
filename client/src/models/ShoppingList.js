@@ -1,6 +1,6 @@
 
 class ShoppingList {
-    constructor({ config }) {
+    constructor(config) {
         this.id = config.id;
         this.name = config.name || "";
     }

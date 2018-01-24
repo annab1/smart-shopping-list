@@ -17,7 +17,9 @@ class Router extends Component {
   render() {
     const Page = this._pageComponents[this.props.shoppingListViewStore.currentPage];
 
-    return (<Page/>);
+    return (<div className="page-layout">
+        <Page/>
+    </div>);
   }
 }
 

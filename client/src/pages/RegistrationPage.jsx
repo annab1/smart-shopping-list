@@ -27,51 +27,53 @@ class RegistrationPage extends Component {
     const { firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount } = this.state;
 
     return (
-      <form>
-        <input type="text" value={firstName} placeholder="First name"/>
-        <input type="text" value={lastName} placeholder="Last name"/>
-        <input type="email" value={email} placeholder="Email" />
-        <input type="password" value={password} placeholder="Password"/>
-        <input type="date" value={birthDay} />
-        <label>
-          <input type="radio"
-                 name="gender"
-                 value={true}
-                 checked={isFemale}
-                 onChange={this.setGender}>
-          </input>
-          Female
-        </label>
-        <label>
-          <input type="radio"
-                 name="gender"
-                 value={false}
-                 checked={!isFemale}
-                 onChange={this.setGender}>
-          </input>
-          Male
-        </label>
-        <label>
-          <input type="radio"
-                 name="relationship"
-                 value={true}
-                 checked={isSingle}
-                 onChange={this.setRelationship}>
-          </input>
-          Single
-        </label>
-        <label>
-          <input type="radio"
-                 name="relationship"
-                 value={false}
-                 checked={!isSingle}
-                 onChange={this.setRelationship}>
-          </input>
-          Not single
-        </label>
-        <input type="number" min="0" max="20" value={childrenCount}/>
-        <button type="button" onClick={this.register}>Register</button>
-      </form>
+      <div className="content-panel">
+        <form>
+          <input type="text" value={firstName} placeholder="First name"/>
+          <input type="text" value={lastName} placeholder="Last name"/>
+          <input type="email" value={email} placeholder="Email" />
+          <input type="password" value={password} placeholder="Password"/>
+          <input type="date" value={birthDay} />
+          <label>
+            <input type="radio"
+                   name="gender"
+                   value={true}
+                   checked={isFemale}
+                   onChange={this.setGender}>
+            </input>
+            Female
+          </label>
+          <label>
+            <input type="radio"
+                   name="gender"
+                   value={false}
+                   checked={!isFemale}
+                   onChange={this.setGender}>
+            </input>
+            Male
+          </label>
+          <label>
+            <input type="radio"
+                   name="relationship"
+                   value={true}
+                   checked={isSingle}
+                   onChange={this.setRelationship}>
+            </input>
+            Single
+          </label>
+          <label>
+            <input type="radio"
+                   name="relationship"
+                   value={false}
+                   checked={!isSingle}
+                   onChange={this.setRelationship}>
+            </input>
+            Not single
+          </label>
+          <input type="number" min="0" max="20" value={childrenCount}/>
+          <button type="button" onClick={this.register}>Register</button>
+        </form>
+      </div>
     );
   }
 

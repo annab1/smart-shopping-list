@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import './App.css';
+import "./style/style.scss";
+
+import React from 'react';
 import { Provider } from "mobx-react";
 import ShoppingListViewStore from "./view-stores/ShoppingListViewStore";
 import UserViewStore from "./view-stores/UserViewStore";
