@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Pages from "../constants/Pages";
 import { inject, observer } from "mobx-react";
+import ShoppingListItem from "../components/ShoppingListItem";
 
 @inject("shoppingListViewStore")
 @observer
@@ -16,19 +17,15 @@ class ShoppingListPage extends Component {
     const { shoppingListViewStore } = this.props;
     return (
       <div className="content-panel">
-        Shopping List Page
-        <ul>
+        <h1 className="title">Shopping List</h1>
+        <ul className="">
           { shoppingListViewStore.shoppingList.map(
             product =>
               <li>
-                <input
-                  type='checkbox'
-                  checked={ product.chosen }
-                  onChange={ this.onProductClicked }
-                />
+               <ShoppingListItem product={product}/>
               </li>
           ) }
-
+          <ShoppingListItem />
         </ul>
         <button onClick={this.addPro}>Add Product</button>
       </div>

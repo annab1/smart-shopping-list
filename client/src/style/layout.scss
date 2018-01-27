@@ -17,22 +17,27 @@
 
 .content-panel {
   border: 1px solid $border-color;
-  border-radius: $border-radius;
+  border-radius: 3px;
   background-color: #ffffff;
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
-
-  top: 50px;
-  bottom: 50px;
-  left: 150px;
-  right: 150px;
-  padding: 30px;
+  height: 700px;
+  width: 800px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-height: 500px;
+  min-width: 600px;
 
   &.small {
-    top: 170px;
-    bottom: 170px;
-    left: 500px;
-    right: 500px;
+    height: 500px;
+    min-height: 500px;
+    width: 450px;
+    min-width: 450px;
   }
+}
+
+.padded-section {
+  padding: 30px;
 }

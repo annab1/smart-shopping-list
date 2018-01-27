@@ -14,19 +14,21 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className="content-panel small">
+      <div className="content-panel small login-page">
         <h1 className="title">Login to your account</h1>
-        <form className="login-form">
-          <input type="text" placeholder="User name" value={this.userName}/>
-          <input type="password" placeholder="Password" value={this.password}/>
-          <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
-        </form>
-        <label> Don't have an account yet?
-          <button className="btn link-btn"
-                  onClick={this.signup}>
-            Sign up
-          </button>
-        </label>
+        <section className="padded-section">
+          <form className="login-form">
+            <input type="text" placeholder="User name" value={this.userName}/>
+            <input type="password" placeholder="Password" value={this.password}/>
+            <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
+          </form>
+          <label> Don't have an account yet?
+            <button className="btn link-btn"
+                    onClick={this.signup}>
+              Sign up
+            </button>
+          </label>
+        </section>
       </div>
     );
   }
