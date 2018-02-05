@@ -14,7 +14,8 @@ def get_categories(request):
 
 
 def get_products(request):
-    products = Product.objects.all()
+    prefix_filter = request.GET["prefix"]
+    products = Product.objects.all().filter(name__icontains=prefix_filter)
     serializer = ProductSerializer(products, many=True)
     return JsonResponse(serializer.data, safe=False)
 
