@@ -72,3 +72,10 @@ def get_products_in_list(request):
     instances = ProductInstances.objects.all().filter(shopping_list=list_instance)
     serializer = ProductInstancesSerializer(instances, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+
+def get_product_by_id(request):
+    prod_id = request.GET["id"]
+    product = Product.objects.all().filter(id=prod_id)[0]
+    serializer = ProductSerializer(product)
+    return JsonResponse(serializer.data, safe=False)
