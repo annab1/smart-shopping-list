@@ -3,7 +3,7 @@ from datetime import datetime
 import time
 # Create your views here.
 from shopping.models import Category, Product, ShoppingList, ProductInstances
-from shopping.serializers import CategorySerializer, ProductSerializer, ProductInstancesSerializer
+from shopping.serializers import CategorySerializer, ProductSerializer, ProductInstancesSerializer, ShoppingListSerializer
 from django.contrib.auth.models import User
 
 
@@ -42,11 +42,28 @@ def create_list(request):
     return HttpResponse('')
 
 
+# The following code adds some products to the list for test purposes. IT SHOULD BE DELETED
+def add_some_prodcuts_to_list(id):
+    list_id = id
+    product_id = 2
+    quantity = 2
+    list_instance = ShoppingList.objects.get(id=list_id)
+    product_instance = Product.objects.get(id=product_id)
+    instances = ProductInstances.objects.all().filter(shopping_list=list_instance, product=product_instance)
+    if len(instances) == 0:
+        ProductInstances.objects.create(shopping_list=list_instance, product=product_instance, amount=quantity)
+    else:
+        instances[0].amount += quantity
+        instances[0].save()
+
+
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     user = User.objects.get(id=1)
-    ShoppingList.objects.create(name=name, user=user, date=datetime.now())
-    return HttpResponse('')
+    created_list = ShoppingList.objects.create(name=name, user=user, date=datetime.now())
+    add_some_prodcuts_to_list(created_list.id)
+    serializer = ShoppingListSerializer(created_list)
+    return JsonResponse(serializer.data, safe=False)
 
 
 def update_list(request):
