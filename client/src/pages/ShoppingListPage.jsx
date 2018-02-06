@@ -18,6 +18,7 @@ class ShoppingListPage extends Component {
     return (
       <div className="content-panel">
         <h1 className="title">Shopping List</h1>
+
         <ul className="">
           { shoppingListViewStore.shoppingList.map(
             product =>
@@ -25,9 +26,7 @@ class ShoppingListPage extends Component {
                <ShoppingListItem product={product}/>
               </li>
           ) }
-          <ShoppingListItem />
         </ul>
-        <button onClick={this.addPro}>Add Product</button>
       </div>
     );
   }
