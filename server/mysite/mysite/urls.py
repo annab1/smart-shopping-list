@@ -18,7 +18,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from shopping.views import (get_categories, get_products, create_list,add_product, remove_product,
-                            update_list, get_products_in_list, get_product_by_id)
+                            update_list, get_products_in_list, get_product_by_id, generate_list)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^list/add/', add_product),
     url(r'^list/remove/', remove_product),
     url(r'^list/create/', create_list),
+    url(r'^list/generate/', generate_list),
     url(r'^list/update/', update_list),
     url(r'^list/get/', get_products_in_list)
 ]

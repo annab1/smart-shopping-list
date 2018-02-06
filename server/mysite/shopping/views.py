@@ -1,6 +1,6 @@
 from django.http import JsonResponse, HttpResponse
 from datetime import datetime
-
+import time
 # Create your views here.
 from shopping.models import Category, Product, ShoppingList, ProductInstances
 from shopping.serializers import CategorySerializer, ProductSerializer, ProductInstancesSerializer
@@ -39,7 +39,13 @@ def create_list(request):
     name = request.POST['name']
     user = User.objects.get(id=int(request.user.id))
     ShoppingList.objects.create(name=name, user=user, date=datetime.now())
+    return HttpResponse('')
 
+
+def generate_list(request):
+    name = time.strftime("%d_%m_%Y")
+    user = User.objects.get(id=1)
+    ShoppingList.objects.create(name=name, user=user, date=datetime.now())
     return HttpResponse('')
 
 
