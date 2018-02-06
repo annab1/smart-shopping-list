@@ -37,7 +37,7 @@ class LoginPage extends Component {
   onSubmit() {
     const { userViewStore, shoppingListViewStore } = this.props;
     userViewStore.login(this.userName, this.password).then(() => {
-      shoppingListViewStore.setCurrentPage(Pages.ShoppingList);
+      shoppingListViewStore.setCurrentPage(Pages.ListsPage);
     })
   }
 

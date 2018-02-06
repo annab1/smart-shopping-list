@@ -90,7 +90,7 @@ class RegistrationPage extends Component {
     const { shoppingListViewStore, userViewStore } = this.props;
     userViewStore.register(firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount)
       .then(() => {
-        shoppingListViewStore.setCurrentPage(Pages.ShoppingList);
+        shoppingListViewStore.setCurrentPage(Pages.ListsPage);
       });
   }
 }

@@ -1,13 +1,17 @@
+import Category from "./Category";
 
 class Product {
   constructor(config) {
     this.name = config.name || "";
+    this.category = config.category;
   }
 
-  serialize() {
-    return {
-        name: this.name
-    };
+  static parse(apiProduct) {
+    let product = new Product();
+    product.name = apiProduct.name;
+    product.category = Category.parse(apiProduct.category);
+
+    return product;
   }
 }
 

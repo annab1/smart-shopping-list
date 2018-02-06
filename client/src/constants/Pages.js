@@ -1,7 +1,8 @@
 const Pages = {
   "Login": "Login",
   "Register" : "Register",
-  "ShoppingList": "ShoppingList"
+  "ShoppingList": "ShoppingList",
+  "ListsPage": "ListsPage"
 };
 
 export default Pages;

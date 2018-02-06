@@ -3,13 +3,16 @@ import Pages from "../constants/Pages";
 import Product from "../models/Product";
 import User from "../models/User";
 import ShoppingListApi from "../api/ShoppingListApi";
+import ShoppingList from "../models/ShoppingList";
 
 class ShoppingListViewStore {
   @observable currentPage = Pages.Login;
-  @observable shoppingList = [];
+  @observable currentShoppingList = null;
 
   constructor() {
     this._api = ShoppingListApi;
+
+    this.generateList = this.generateList.bind(this);
   }
 
   @action.bound
@@ -20,7 +23,13 @@ class ShoppingListViewStore {
   addProduct(productName) {
     let newProd  = new Product({ name: productName });
     return this._api.addProduct(newProd).then(action(() => {
-      this.shoppingList.push(newProd);
+      this.currentShoppingList.products.push(newProd);
+    }));
+  }
+
+  generateList() {
+    return this._api.generateList().then(action(generatedList => {
+      this.currentShoppingList = ShoppingList.parse(generatedList);
     }));
   }
 

@@ -13,20 +13,27 @@ class ShoppingListPage extends Component {
   }
 
   render() {
-
     const { shoppingListViewStore } = this.props;
+
+    if (!shoppingListViewStore.currentShoppingList) {
+      //TODO - spinner
+      return null;
+    }
+
     return (
       <div className="content-panel">
         <h1 className="title">Shopping List</h1>
 
         <ul className="">
-          { shoppingListViewStore.shoppingList.map(
+          { shoppingListViewStore.currentShoppingList.products.map(
             product =>
               <li>
                <ShoppingListItem product={product}/>
               </li>
           ) }
         </ul>
+
+        <button onClick={this.addPro}>AddProduct</button>
       </div>
     );
   }
