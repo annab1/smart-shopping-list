@@ -13,6 +13,13 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ("id", "name", "category")
+        category = CategorySerializer()
+
+
+class ShoppingListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShoppingList
+        fields = ("id", "name", "date", "user")
 
 
 class ProductInstancesSerializer(serializers.ModelSerializer):
@@ -20,7 +27,5 @@ class ProductInstancesSerializer(serializers.ModelSerializer):
         model = ProductInstances
         fields = ("id", "shopping_list", "product", "amount")
 
-class ShoppingListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ShoppingList
-        fields = ("id", "name", "date", "user")
+    product = ProductSerializer()
+    shopping_list = ShoppingListSerializer()
