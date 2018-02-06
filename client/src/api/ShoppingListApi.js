@@ -1,10 +1,10 @@
-const http = require("axios");
+import axios from "axios";
 
-const BASE_URL = "";
+const BASE_URL = "localhost:8000/";
 
 class ShoppingListApi {
   constructor() {
-    this._instance = axios();
+    this._instance = axios.create();
   }
 
   login(userName, password) {
@@ -37,6 +37,10 @@ class ShoppingListApi {
     return this._post("list/create", {
       list_name: listName
     });
+  }
+
+  generateList() {
+    return this._get("list/generate");
   }
 
   updateListName(listId, listName) {

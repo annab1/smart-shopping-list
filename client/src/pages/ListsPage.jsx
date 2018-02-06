@@ -8,15 +8,26 @@ import Pages from "../constants/Pages";
 class ListsPage extends Component {
   constructor(props) {
     super(props);
+
+    this.generateList = this.generateList.bind(this);
   }
 
   render() {
-    
-    <div>
+    const { shoppingListViewStore } = this.props;
 
+    return (
+    <div className="content-panel">
+      <button onClick={this.generateList}>Generate List</button>
     </div>
+    );
 
+  }
 
+  generateList() {
+    const { shoppingListViewStore } = this.props;
+    shoppingListViewStore.generateList().then(() => {
+      shoppingListViewStore.setCurrentPage(Pages.ShoppingList);
+    });
   }
 
 }
