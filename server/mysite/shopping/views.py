@@ -100,12 +100,10 @@ def remove_product(request):
     return HttpResponse('')
 
 
-def get_products_in_list(request):
+def get_shopping_list(request):
     list_id = request.GET["list_id"]
     list_instance = ShoppingList.objects.get(id=list_id)
-    instances = ProductInstances.objects.all().filter(
-        shopping_list=list_instance)
-    serializer = ProductInstancesSerializer(instances, many=True)
+    serializer = ShoppingListSerializer(list_instance)
     return JsonResponse(serializer.data, safe=False)
 
 

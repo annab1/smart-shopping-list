@@ -29,7 +29,7 @@ class ShoppingList(models.Model):
 
 
 class ProductInstances(models.Model):
-    shopping_list = models.ForeignKey(ShoppingList)
+    shopping_list = models.ForeignKey(ShoppingList, related_name="products")
     product = models.ForeignKey(Product)
     amount = models.IntegerField()
 

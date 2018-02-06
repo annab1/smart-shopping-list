@@ -23,7 +23,7 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             )
 from shopping.views import (get_categories, get_products, create_list,
                             add_product, remove_product,
-                            update_list, get_products_in_list,
+                            update_list, get_shopping_list,
                             get_product_by_id, generate_list)
 
 urlpatterns = [
@@ -31,10 +31,6 @@ urlpatterns = [
     url(r'^get/categories/', get_categories),
     url(r'^get/products/', get_products),
 ]
-
-from rest_framework import views, serializers, status
-from rest_framework.response import Response
-
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -46,7 +42,7 @@ urlpatterns = [
     url(r'^list/create/', create_list),
     url(r'^list/generate/', generate_list),
     url(r'^list/update/', update_list),
-    url(r'^list/get/', get_products_in_list),
+    url(r'^list/get/', get_shopping_list),
 
     # Api for Auth
     url(r'^$', generic.RedirectView.as_view(
