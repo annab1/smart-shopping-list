@@ -3,7 +3,7 @@ from datetime import datetime
 
 # Create your views here.
 from shopping.models import Category, Product, ShoppingList, ProductInstances
-from shopping.serializers import CategorySerializer, ProductSerializer
+from shopping.serializers import CategorySerializer, ProductSerializer, ProductInstancesSerializer
 from django.contrib.auth.models import User
 
 
@@ -14,7 +14,8 @@ def get_categories(request):
 
 
 def get_products(request):
-    products = Product.objects.all()
+    prefix_filter = request.GET["prefix"]
+    products = Product.objects.all().filter(name__icontains=prefix_filter)
     serializer = ProductSerializer(products, many=True)
     return JsonResponse(serializer.data, safe=False)
 
@@ -49,6 +50,7 @@ def update_list(request):
 
     return HttpResponse('')
 
+
 def remove_product(request):
     list_id = request.POST["list_id"]
     product_id = request.POST["product_id"]
@@ -62,3 +64,18 @@ def remove_product(request):
         instance.amount -= quantity
     instance.save()
     return HttpResponse('')
+
+
+def get_products_in_list(request):
+    list_id = request.GET["list_id"]
+    list_instance = ShoppingList.objects.get(id=list_id)
+    instances = ProductInstances.objects.all().filter(shopping_list=list_instance)
+    serializer = ProductInstancesSerializer(instances, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def get_product_by_id(request):
+    prod_id = request.GET["id"]
+    product = Product.objects.all().filter(id=prod_id)[0]
+    serializer = ProductSerializer(product)
+    return JsonResponse(serializer.data, safe=False)
