@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "localhost:8000/";
+const BASE_URL = "http://localhost:8000/";
 
 class ShoppingListApi {
   constructor() {
@@ -8,10 +8,10 @@ class ShoppingListApi {
 
     let token = window.localStorage.getItem('jwt');
     this._instance.interceptors.request.use(config => {
-      if (!config.header) {
-        config.header = {};
+      if (!config.headers) {
+        config.headers = {};
       }
-      config.header.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
       return config;
     });
   }

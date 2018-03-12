@@ -10,6 +10,7 @@ class LoginPage extends Component {
     super(props);
 
     this.signup = this.signup.bind(this);
+    this.state = {};
   }
 
   render() {
@@ -22,6 +23,11 @@ class LoginPage extends Component {
             <input type="password" placeholder="Password" value={this.password}/>
             <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
           </form>
+          {this.state.errMessage &&
+            <label className="err-label">
+              {this.state.errMessage}
+             </label>
+          }
           <label> Don't have an account yet?
             <button className="btn link-btn"
                     onClick={this.signup}>
@@ -38,7 +44,9 @@ class LoginPage extends Component {
     const { userViewStore, shoppingListViewStore } = this.props;
     userViewStore.login(this.userName, this.password).then(() => {
       shoppingListViewStore.setCurrentPage(Pages.ListsPage);
-    })
+    }).catch(err => {
+      this.setState({ errMessage: err });
+    });
   }
 
   signup() {
