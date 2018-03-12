@@ -5,11 +5,24 @@ const BASE_URL = "localhost:8000/";
 class ShoppingListApi {
   constructor() {
     this._instance = axios.create();
+
+    let token = window.localStorage.getItem('jwt');
+    this._instance.interceptors.request.use(config => {
+      if (!config.header) {
+        config.header = {};
+      }
+      config.header.Authorization = `Bearer ${token}`;
+      return config;
+    });
   }
 
   login(userName, password) {
-    //TODO
-    return Promise.resolve();
+    return this._post("api/auth/token/obtain", {
+      username: userName || "admin", //TODO - remove
+      password: password || "Aa123456" //TODO - remove
+    }).then(token => {
+      window.localStorage.setItem('jwt', token.access);
+    });
   }
 
   register(user) {
@@ -70,7 +83,7 @@ class ShoppingListApi {
 
   _get(url, config) {
     return this._instance({
-      method: "get",
+      method: "GET",
       url: BASE_URL + url,
       ...config
     });
@@ -78,7 +91,7 @@ class ShoppingListApi {
 
   _post(url, config) {
     return this._instance({
-      method: "post",
+      method: "POST",
       url: BASE_URL+ url,
       ...config
     });
