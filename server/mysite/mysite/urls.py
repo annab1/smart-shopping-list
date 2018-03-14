@@ -23,7 +23,7 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             )
 from shopping.views import (get_categories, get_products, create_list,
                             add_product, remove_product,
-                            update_list, get_shopping_list,
+                            update_list, get_shopping_list, get_shopping_lists,
                             get_product_by_id, generate_list)
 
 urlpatterns = [
@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^list/generate/', generate_list),
     url(r'^list/update/', update_list),
     url(r'^list/get/', get_shopping_list),
+    url(r'^list/getall/', get_shopping_lists),
 
     # Api for Auth
     url(r'^$', generic.RedirectView.as_view(
