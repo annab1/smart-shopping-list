@@ -1,5 +1,6 @@
 import ListProduct from "./ListProduct";
 import { observable } from "mobx";
+import moment from "moment";
 
 class ShoppingList {
   @observable products;
@@ -13,8 +14,8 @@ class ShoppingList {
 
   static parse(apiList) {
     let list = new ShoppingList();
-    list.id = apiList.list_id;
-    list.date = apiList.date;
+    list.id = apiList.id;
+    list.date = moment(apiList.date);
     list.name = apiList.name;
     list.products = apiList.products.map( p => ListProduct.parse(p, list));
 

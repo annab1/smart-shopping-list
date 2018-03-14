@@ -1,2 +1,12 @@
 @import "../variables";
 
+.shopping-lists {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.generate-list-btn {
+  margin-bottom: 15px;
+}

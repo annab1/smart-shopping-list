@@ -2,11 +2,17 @@
 @import "layout";
 @import "variables";
 @import "pages/login";
+@import "pages/lists";
+@import "components/shopping-list-tile";
 
 body {
   font-family: 'Open Sans', sans-serif;
   color: $text-color;
   font-size: 16px;
+}
+
+strong {
+  font-weight: bold;
 }
 
 input[type="text"], input[type="password"] {
@@ -43,6 +49,7 @@ input[type="text"], input[type="password"] {
   color: $layout-main-color;
   font-size: 18px;
   height: 37px;
+  flex-shrink: 0;
 
   &:hover {
     color: #ffffff;
@@ -54,4 +61,26 @@ input[type="text"], input[type="password"] {
   border: none;
   font-size: 16px;
   color: $layout-main-color;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-list {
+  display: table;
+
+  li {
+    display: table-row;
+  }
+
+  .table-list-item-name {
+    display: table-cell;
+    padding-right: 5px;
+  }
+}
+
+.small-text {
+  font-size: $small-font-size;
 }
