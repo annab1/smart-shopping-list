@@ -1,6 +1,6 @@
 
 class User {
-  constructor(config) {
+  constructor(config = {}) {
     this.id = config.id || null;
     this.firstName = config.firstName || "";
     this.lastName = config.lastName || "";

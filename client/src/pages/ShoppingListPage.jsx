@@ -26,14 +26,15 @@ class ShoppingListPage extends Component {
 
         <ul className="">
           { shoppingListViewStore.currentShoppingList.products.map(
-            product =>
-              <li>
-               <ShoppingListItem product={product}/>
+            listProduct =>
+              <li key={listProduct.product.name}>
+               <ShoppingListItem product={listProduct.product}/>
               </li>
           ) }
         </ul>
 
-        <button onClick={this.addPro}>AddProduct</button>
+        <button className="btn link-btn"
+                onClick={this.addPro}>AddProduct</button>
       </div>
     );
   }

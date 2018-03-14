@@ -1,7 +1,7 @@
 import Category from "./Category";
 
 class Product {
-  constructor(config) {
+  constructor(config = {}) {
     this.name = config.name || "";
     this.category = config.category;
   }

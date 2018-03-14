@@ -4,7 +4,7 @@ import { observable } from "mobx";
 class ShoppingList {
   @observable products;
 
-  constructor(config) {
+  constructor(config = {}) {
     this.id = config.id;
     this.date = config.date;
     this.name = config.name || "";

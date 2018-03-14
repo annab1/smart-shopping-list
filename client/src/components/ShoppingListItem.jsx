@@ -6,18 +6,21 @@ class ShoppingListItem extends Component {
 
     this.onCheck = this.onCheck.bind(this);
   }
+
   render() {
-    const { product } = this.props;
+    const {product} = this.props;
 
     return (
       <div className="shopping-list-item">
-        <input
-          type="checkbox"
-          checked={ false }
-          onChange={ this.onCheck }
-        />
+        <label className="container">
+          {product.name}
+          <input type="checkbox"
+                 checked={ false }
+                 onChange={ this.onCheck } />
+          <span className="checkmark"></span>
+        </label>
       </div>
-    )
+    );
   }
 
   onCheck() {

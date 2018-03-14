@@ -12,12 +12,23 @@ class ListsPage extends Component {
     this.generateList = this.generateList.bind(this);
   }
 
+  componentWillMount() {
+    this.props.shoppingListViewStore.getLists();
+  }
+
   render() {
     const { shoppingListViewStore } = this.props;
 
     return (
     <div className="content-panel">
-      <button onClick={this.generateList}>Generate List</button>
+      <button className="btn link-btn"
+              onClick={this.generateList}>Generate List</button>
+      {shoppingListViewStore.lists.map(list =>
+        <div key={list.id}
+             className="shopping-list-tile">
+          {list.name}
+        </div>
+      )}
     </div>
     );
 

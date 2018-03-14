@@ -6,22 +6,21 @@ class ShoppingListApi {
   constructor() {
     this._instance = axios.create();
 
-    let token = window.localStorage.getItem('jwt');
     this._instance.interceptors.request.use(config => {
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${window.localStorage.getItem('jwt')}`;
       return config;
     });
   }
 
   login(userName, password) {
-    return this._post("api/auth/token/obtain", {
+    return this._post("api/auth/token/obtain/", {
       username: userName || "admin", //TODO - remove
       password: password || "Aa123456" //TODO - remove
-    }).then(token => {
-      window.localStorage.setItem('jwt', token.access);
+    }).then(res => {
+      window.localStorage.setItem('jwt', res.access);
     });
   }
 
@@ -56,6 +55,10 @@ class ShoppingListApi {
     return this._get("list/generate");
   }
 
+  getLists() {
+    return this._get("list/getall");
+  }
+
   updateListName(listId, listName) {
     return this._post("list/update", {
       list_id: listId,
@@ -64,37 +67,31 @@ class ShoppingListApi {
   }
 
   getListProducts(listId) {
-    return this._get("list/get", {
-      list_id: listId
-    });
+    return this._get(`list/get?list_id=${listId}`);
   }
 
   getProductById(productId) {
-    return this._get("get/product", {
-      id: productId
-    });
+    return this._get(`get/product?id=${productId}`);
   }
 
   getProducts(prefix) {
-    return this._get("get/product", {
-      prefix
-    });
+    return this._get(`get/product?prefix=${prefix}`);
   }
 
   _get(url, config) {
     return this._instance({
       method: "GET",
       url: BASE_URL + url,
-      ...config
-    });
+      data: config
+    }).then(res => res ? res.data : null);
   }
 
   _post(url, config) {
     return this._instance({
       method: "POST",
       url: BASE_URL+ url,
-      ...config
-    });
+      data: config
+    }).then(res => res ? res.data : null);
   }
 
 }

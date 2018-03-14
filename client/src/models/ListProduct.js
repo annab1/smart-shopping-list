@@ -1,7 +1,7 @@
 import Product from "./Product";
 
 class ListProduct {
-  constructor(config) {
+  constructor(config = {}) {
     this.product = config.product;
     this.list = config.list;
     this.amount = config.amount;
@@ -9,7 +9,7 @@ class ListProduct {
 
   static parse(apiListProduct, list) {
     let listProduct = new ListProduct();
-    listProduct.product = Product.parse(apiListProduct);
+    listProduct.product = Product.parse(apiListProduct.product);
     listProduct.list = list;
     listProduct.amount = apiListProduct.amount;
 
