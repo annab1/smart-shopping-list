@@ -109,7 +109,7 @@ def get_shopping_list(request):
 
 def get_shopping_lists(request):
     list_instances = ShoppingList.objects.all()
-    serializer = ShoppingListSerializer(list_instances)
+    serializer = ShoppingListSerializer(list_instances, many=True)
     return JsonResponse(serializer.data, safe=False)
 
 
