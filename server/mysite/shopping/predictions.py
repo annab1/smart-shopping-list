@@ -10,16 +10,11 @@ def aggregate_data(user_id, product_id):
     :return: Dataframe containing the data sliced by timeframe
     '''
     user_lists = ShoppingList.objects.all().filter(user=user_id)
-    users_products = ProductInstances.objects.all().filter(shopping_list__in=[x.id for x in user_lists])
+    users_products = ProductInstances.objects.all().filter(shopping_list__in=user_lists, product_id=product_id)
     content = []
     for single_list in user_lists:
-        product_for_date = [x for x in users_products if x.shopping_list == single_list.id]
+        product_for_date = [x for x in users_products if x.shopping_list.id == single_list.id]
         content.append((single_list.date, product_for_date[0].amount) if product_for_date else (single_list.date, 0))
-    f = open("c:\\rashti\\test.txt")
-    for a in content:
-        f.write(str(a))
-    f.close()
-
-
+    return content
     # URLS - https://stackoverflow.com/questions/11697887/converting-django-queryset-to-pandas-dataframe
     #  https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python
