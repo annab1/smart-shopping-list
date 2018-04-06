@@ -1,4 +1,4 @@
-import pandas as pd
+from statsmodels.tsa.arima_model import ARIMA
 from models import UserData, ProductInstances, ShoppingList
 
 
@@ -18,3 +18,11 @@ def aggregate_data(user_id, product_id):
     return content
     # URLS - https://stackoverflow.com/questions/11697887/converting-django-queryset-to-pandas-dataframe
     #  https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python
+
+
+def predict_single_product(user_id, product_id):
+    data = aggregate_data(user_id, product_id)
+    model = ARIMA(data, order=(5, 1, 0))
+    model_fit = model.fit(disp=0)
+    output = model_fit.forecast()
+    return output[0]
