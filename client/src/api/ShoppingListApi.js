@@ -74,8 +74,8 @@ class ShoppingListApi {
     return this._get(`get/product?id=${productId}`);
   }
 
-  getProducts(prefix) {
-    return this._get(`get/product?prefix=${prefix}`);
+  getProducts(prefix = "") {
+    return this._get(`get/products?prefix=${prefix}`);
   }
 
   _get(url, config) {

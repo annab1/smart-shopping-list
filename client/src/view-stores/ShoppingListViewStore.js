@@ -34,6 +34,11 @@ class ShoppingListViewStore {
     }));
   }
 
+  getProducts(prefix) {
+    return this._api.getProducts(prefix).then(products =>
+      products.map(p => Product.parse(p)));
+  }
+
   getLists() {
     return this._api.getLists().then(action(lists => {
       this.lists = lists.map(l => ShoppingList.parse(l));

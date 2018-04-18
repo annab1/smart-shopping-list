@@ -16,7 +16,7 @@ strong {
   font-weight: bold;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[role="combobox"] {
   border: 1px solid $border-color;
   border-radius: $border-radius;
   font-size: 16px;

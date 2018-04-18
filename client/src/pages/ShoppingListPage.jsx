@@ -1,15 +1,20 @@
 import React, {Component} from "react";
-import Pages from "../constants/Pages";
 import { inject, observer } from "mobx-react";
 import ShoppingListItem from "../components/ShoppingListItem";
+import Autocomplete from "react-autocomplete"
+import cn from "classnames";
 
 @inject("shoppingListViewStore")
 @observer
 class ShoppingListPage extends Component {
+
   constructor(props) {
     super(props);
 
     this.onProductClicked = this.onProductClicked.bind(this);
+    this.searchProducts = this.searchProducts.bind(this);
+    this.renderAutocompleteItem = this.renderAutocompleteItem.bind(this);
+    this.state = { matchingProducts: [] , searchValue: "" };
   }
 
   render() {
@@ -34,12 +39,25 @@ class ShoppingListPage extends Component {
         </ul>
 
         <section className="add-product-section">
-          <input type="text" placeholder="Search for product"/>
+          <Autocomplete items={this.state.matchingProducts}
+                        wrapperProps={({className: "input-wrapper"})}
+                        inputProps={({placeholder: "Search for product"})}
+                        renderItem={this.renderAutocompleteItem}
+                        value={this.state.searchValue}
+                        getItemValue={item => item.name}
+
+                        onChange={this.searchProducts}/>
           <button className="btn action-btn"
                   onClick={this.addPro}>Add</button>
         </section>
       </div>
     );
+  }
+
+  renderAutocompleteItem(item, isHighlighted) {
+    return (<div className={cn("autocomplete-item", { "highlighted" : isHighlighted})}>
+      {item.name}
+    </div>);
   }
 
   addPro() {
@@ -49,6 +67,14 @@ class ShoppingListPage extends Component {
 
   onProductClicked() {
 
+  }
+
+  searchProducts(e) {
+    const { shoppingListViewStore } = this.props;
+    let searchValue = e.target.value;
+    shoppingListViewStore.getProducts(searchValue).then(products =>
+      this.setState({ matchingProducts: products, searchValue: searchValue })
+    );
   }
 }
 
