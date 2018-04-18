@@ -12,13 +12,14 @@ class ShoppingListItem extends Component {
 
     return (
       <div className="shopping-list-item">
-        <label className="container">
-          {product.name}
+        <span className="container">
           <input type="checkbox"
-                 checked={ false }
+                 id={product.name + "checkbox"}
+                 value="None"
                  onChange={ this.onCheck } />
-          <span className="checkmark"></span>
-        </label>
+          <label htmlFor={product.name + "checkbox"} />
+        </span>
+        {product.name}
       </div>
     );
   }

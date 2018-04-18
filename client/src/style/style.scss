@@ -3,6 +3,7 @@
 @import "variables";
 @import "pages/login";
 @import "pages/lists";
+@import "pages/shopping-list";
 @import "components/shopping-list-tile";
 
 body {
@@ -22,6 +23,7 @@ input[type="text"], input[type="password"] {
   height: 37px;
   padding-left: 10px;
   padding-right: 10px;
+  box-sizing: border-box;
 }
 
 .title {
