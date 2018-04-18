@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import { observer, inject } from "mobx-react";
 import { action } from "mobx";
 import Pages from "../constants/Pages";
-import ShoppingListTile from "../components/ShoppingListTile";
 
 @inject("shoppingListViewStore")
 @observer
@@ -11,7 +10,6 @@ class ListsPage extends Component {
     super(props);
 
     this.generateList = this.generateList.bind(this);
-    this.loadList = this.loadList.bind(this);
   }
 
   componentWillMount() {
@@ -22,20 +20,16 @@ class ListsPage extends Component {
     const { shoppingListViewStore } = this.props;
 
     return (
-      <div className="content-panel">
-        <section className="padded-section flex-col">
-          <button className="btn action-btn generate-list-btn"
-                  onClick={this.generateList}>Generate List</button>
-            <div className="shopping-lists">
-              {shoppingListViewStore.lists.map(list =>
-                <ShoppingListTile key={list.id}
-                                  list={list}
-                                  onClick={this.loadList}
-                />
-              )}
-          </div>
-        </section>
-      </div>
+    <div className="content-panel">
+      <button className="btn link-btn"
+              onClick={this.generateList}>Generate List</button>
+      {shoppingListViewStore.lists.map(list =>
+        <div key={list.id}
+             className="shopping-list-tile">
+          {list.name}
+        </div>
+      )}
+    </div>
     );
 
   }
@@ -45,13 +39,6 @@ class ListsPage extends Component {
     shoppingListViewStore.generateList().then(() => {
       shoppingListViewStore.setCurrentPage(Pages.ShoppingList);
     });
-  }
-
-  @action
-  loadList(list) {
-    const { shoppingListViewStore } = this.props;
-    shoppingListViewStore.currentShoppingList = list;
-    shoppingListViewStore.setCurrentPage(Pages.ShoppingList);
   }
 
 }
