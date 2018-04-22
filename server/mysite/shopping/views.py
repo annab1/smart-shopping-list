@@ -1,4 +1,3 @@
-import pytz
 from django.http import JsonResponse, HttpResponse
 import pandas as pd
 import datetime
@@ -26,41 +25,18 @@ def aggregate_data(user_id, product_id):
     content.append
     for single_list in user_lists:
         product_for_date = [x for x in users_products if x.shopping_list.id == single_list.id]
-        sample_time = (single_list.date - datetime.datetime(1970, 1, 1, tzinfo=pytz.UTC)).total_seconds()
-        #content.append((sample_time, product_for_date[0].amount) if product_for_date else (sample_time, 0))
         content.append(float(product_for_date[0].amount) if product_for_date else float(0))
     return content
     # URLS - https://stackoverflow.com/questions/11697887/converting-django-queryset-to-pandas-dataframe
     #  https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python
 
-
-def parser(a):
-    return pd.datetime.strptime('2005-05', '%Y-%m')
-
-
 def predict_single_product(user_id, product_id):
-    fa = "c:\\rashti\\mysitelog"+str(user_id)+"_"+str(product_id)+ ".txt"
-    f = open(fa, "wb")
     data = aggregate_data(user_id, product_id)
-    #a = pd.DataFrame(data)
-    #a.to_csv("c:\\rashti\\mysitecsv.csv")
-    #data = pd.read_csv("c:\\rashti\\mysitecsv.csv", squeeze=False,index=0, parse_dates=[0], date_parser=parser).values
-    f.write(str(data))
-    f.write("\r\n")
-    #TODO: Convert each number to int64 since there's a bug in ARIMA
-    f.write("\r\nData is " + str(data))
     if len(set(data)) < 2: #0 or 1
-        f.write("Returning due to singular matrix")
-        f.flush()
         return data[0]
     model = ARIMA(data, order=(1, 0, 0))
-    f.write("Arima created")
-    f.flush()
     model_fit = model.fit(disp=0)
-    f.write("\r\nModel was trained")
     output = model_fit.forecast()
-    f.write("\r\nDone with forecast")
-    f.write(str(output[0]))
     return output[0][0]
 
 
@@ -75,6 +51,7 @@ def get_products(request):
     products = Product.objects.all().filter(name__icontains=prefix_filter)
     serializer = ProductSerializer(products, many=True)
     return JsonResponse(serializer.data, safe=False)
+
 
 def add_product(request):
     list_id = request.POST["list_id"]
