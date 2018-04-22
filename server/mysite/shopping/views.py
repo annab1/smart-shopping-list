@@ -99,7 +99,7 @@ def add_some_prodcuts_to_list(id):
 
 
 def generate_list(request):
-    name = request.POST['name']
+    name = time.strftime("%d_%m_%Y")
     user = User.objects.get(id=int(request.user.id))
     list_instance = ShoppingList.objects.create(name=name, user=user, date=pd.datetime.now())
     products = Product.objects.all()
