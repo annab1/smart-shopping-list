@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import { inject, observer } from "mobx-react";
+import {inject, observer} from "mobx-react";
 import ShoppingListItem from "../components/ShoppingListItem";
-import Autocomplete from "react-autocomplete"
-import cn from "classnames";
+import AddProduct from "../components/AddProduct";
 
 @inject("shoppingListViewStore")
 @observer
@@ -11,10 +10,6 @@ class ShoppingListPage extends Component {
   constructor(props) {
     super(props);
 
-    this.onProductClicked = this.onProductClicked.bind(this);
-    this.searchProducts = this.searchProducts.bind(this);
-    this.renderAutocompleteItem = this.renderAutocompleteItem.bind(this);
-    this.state = { matchingProducts: [] , searchValue: "" };
   }
 
   render() {
@@ -29,6 +24,11 @@ class ShoppingListPage extends Component {
       <div className="content-panel">
         <h1 className="title">Shopping List</h1>
 
+        <div className="header">
+          <span className="checkbox" />
+          <span className="product">Product</span>
+          <span className="quantity">Quantity</span>
+        </div>
         <ul className="">
           { shoppingListViewStore.currentShoppingList.products.map(
             listProduct =>
@@ -37,45 +37,11 @@ class ShoppingListPage extends Component {
               </li>
           ) }
         </ul>
-
-        <section className="add-product-section">
-          <Autocomplete items={this.state.matchingProducts}
-                        wrapperProps={({className: "input-wrapper"})}
-                        inputProps={({placeholder: "Search for product"})}
-                        renderItem={this.renderAutocompleteItem}
-                        value={this.state.searchValue}
-                        getItemValue={item => item.name}
-
-                        onChange={this.searchProducts}/>
-          <button className="btn action-btn"
-                  onClick={this.addPro}>Add</button>
-        </section>
+        <AddProduct />
       </div>
     );
   }
 
-  renderAutocompleteItem(item, isHighlighted) {
-    return (<div className={cn("autocomplete-item", { "highlighted" : isHighlighted})}>
-      {item.name}
-    </div>);
-  }
-
-  addPro() {
-    const { shoppingListViewStore } = this.props;
-    shoppingListViewStore.addProduct();
-  }
-
-  onProductClicked() {
-
-  }
-
-  searchProducts(e) {
-    const { shoppingListViewStore } = this.props;
-    let searchValue = e.target.value;
-    shoppingListViewStore.getProducts(searchValue).then(products =>
-      this.setState({ matchingProducts: products, searchValue: searchValue })
-    );
-  }
 }
 
 export default ShoppingListPage;
