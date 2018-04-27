@@ -20,7 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductInstancesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductInstances
-        fields = ("product", "amount")
+        fields = ("product", "amount", "is_checked")
 
     product = ProductSerializer()
 

@@ -31,6 +31,7 @@ def aggregate_data(user_id, product_id):
     # URLS - https://stackoverflow.com/questions/11697887/converting-django-queryset-to-pandas-dataframe
     #  https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python
 
+
 def predict_single_product(user_id, product_id):
     data = aggregate_data(user_id, product_id)
     if len(set(data)) < 2: #0 or 1
@@ -153,3 +154,16 @@ def get_product_by_id(request):
     product = Product.objects.all().filter(id=prod_id)[0]
     serializer = ProductSerializer(product)
     return JsonResponse(serializer.data, safe=False)
+
+
+def update_product_is_checked_val(request):
+    product_id = request.POST["product_id"]
+    value = int(request.POST["value"])
+    value_bool = True if 1 == value else False
+    product_instance = ProductInstances.objects.get(id=product_id)
+    if not product_instance:
+        pass
+    else:
+        product_instance.is_checked = value_bool
+        product_instance.save()
+    return HttpResponse('')
