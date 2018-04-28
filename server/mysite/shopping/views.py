@@ -100,12 +100,14 @@ def add_some_prodcuts_to_list(id):
 
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
+    user_id = 1
     #user = User.objects.get(id=int(request.user.id))
-    user = User.objects.get(id=1)
+    user = User.objects.get(id=user_id)
     list_instance = ShoppingList.objects.create(name=name, user=user, date=pd.datetime.now())
     products = Product.objects.all()
     for product in products:
-        amount = predict_single_product(request.user.id, product.id)
+        #amount = predict_single_product(request.user.id, product.id)
+        amount = predict_single_product(user_id, product.id)
         ProductInstances.objects.create(shopping_list=list_instance, product=product, amount=amount)
     serializer = ShoppingListSerializer(list_instance)
     return JsonResponse(serializer.data, safe=False)
