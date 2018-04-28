@@ -32,7 +32,7 @@ class ProductInstances(models.Model):
     shopping_list = models.ForeignKey(ShoppingList, related_name="products")
     product = models.ForeignKey(Product)
     amount = models.IntegerField()
-    is_checked = models.BooleanField()
+    is_checked = models.BooleanField(default=False)
 
     def __str__(self):
         return "Product: {}, Amount: {}, List: {}".format(self.product,
