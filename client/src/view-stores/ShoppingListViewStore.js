@@ -36,8 +36,14 @@ class ShoppingListViewStore {
   removeProduct(listProduct) {
     return this._api.removeProduct(this.currentShoppingList.id, listProduct.product.id, listProduct.amount)
       .then(action(() => {
-        this.currentShoppingList.products.remove(lp);
+        this.currentShoppingList.products.remove(listProduct);
       }));
+  }
+
+  toggleProductCheck(listProduct) {
+    return this._api.setCheckProduct(listProduct, !listProduct.isChecked).then(action(() => {
+      listProduct.isChecked = !listProduct.isChecked;
+    }));
   }
 
   generateList() {

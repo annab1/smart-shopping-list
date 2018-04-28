@@ -20,7 +20,7 @@ class ShoppingListItem extends Component {
         <span className="checkbox">
           <input type="checkbox"
                  id={listProduct.product.name + "checkbox"}
-                 value="None"
+                 value={listProduct.isChecked}
                  onChange={ this.onCheck } />
           <label htmlFor={listProduct.product.name + "checkbox"} />
         </span>
@@ -38,7 +38,8 @@ class ShoppingListItem extends Component {
   }
 
   onCheck() {
-
+    const { shoppingListViewStore, listProduct } = this.props;
+    shoppingListViewStore.toggleProductCheck(listProduct);
   }
 
   removeProduct() {

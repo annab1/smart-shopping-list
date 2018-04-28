@@ -62,6 +62,13 @@ class ShoppingListApi {
     return this._get("list/getall");
   }
 
+  setCheckProduct(listProduct, isChecked) {
+    return this._post("list/product/check",
+      { product_id: listProduct.id,
+        value: isChecked
+      });
+  }
+
   updateListName(listId, listName) {
     return this._post("list/update", {
       list_id: listId,
