@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import DeleteButton from "./DeleteButton";
 
 class ShoppingListItem extends Component {
   constructor(props) {
@@ -12,14 +13,18 @@ class ShoppingListItem extends Component {
 
     return (
       <div className="shopping-list-item">
-        <span className="container">
+        <span className="checkbox">
           <input type="checkbox"
                  id={product.name + "checkbox"}
                  value="None"
                  onChange={ this.onCheck } />
           <label htmlFor={product.name + "checkbox"} />
         </span>
-        {product.name}
+        <span className="product">{product.name}</span>
+        <span className="quantity">
+          <input type="number" name="quantity" min="1" max="100" value={product.quantity} />
+        </span>
+        <span className="actions"><DeleteButton/></span>
       </div>
     );
   }

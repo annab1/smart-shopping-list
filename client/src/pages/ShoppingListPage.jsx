@@ -28,6 +28,7 @@ class ShoppingListPage extends Component {
           <span className="checkbox" />
           <span className="product">Product</span>
           <span className="quantity">Quantity</span>
+          <span className="actions" />
         </div>
         <ul className="">
           { shoppingListViewStore.currentShoppingList.products.map(
