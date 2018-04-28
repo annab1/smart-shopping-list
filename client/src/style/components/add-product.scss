@@ -1,0 +1,34 @@
+@import "../variables";
+
+.add-product-section {
+  margin-top: 10px;
+  padding: 0 15px;
+  display: flex;
+
+  .input-wrapper {
+    flex-grow: 1;
+    min-width: 0;
+    margin-right: 7px;
+    position: relative;
+
+    input {
+      width: 100%;
+    }
+
+    > div {
+      top: 0 !important;
+      position: static !important;
+      min-width: 0 !important;
+      cursor: pointer;
+      border: 1px solid silver;
+    }
+  }
+}
+
+.autocomplete-item {
+  padding: 10px !important;
+
+  &.highlighted {
+    background: $layout-base-color;
+  }
+}

@@ -1,7 +1,6 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import Pages from "../constants/Pages";
 import Product from "../models/Product";
-import User from "../models/User";
 import ShoppingListApi from "../api/ShoppingListApi";
 import ShoppingList from "../models/ShoppingList";
 
@@ -9,6 +8,11 @@ class ShoppingListViewStore {
   @observable currentPage = Pages.Login;
   @observable lists = [];
   @observable currentShoppingList = null;
+
+  @computed
+  get uncheckedItems() {
+    return this.currentShoppingList.products;
+  }
 
   constructor() {
     this._api = ShoppingListApi;
@@ -42,7 +46,7 @@ class ShoppingListViewStore {
   getLists() {
     return this._api.getLists().then(action(lists => {
       this.lists = lists.map(l => ShoppingList.parse(l));
-    }))
+    }));
   }
 
 }
