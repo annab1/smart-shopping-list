@@ -1,11 +1,15 @@
 import React, {Component} from "react";
 import DeleteButton from "./DeleteButton";
+import {inject, observer} from "mobx-react/index";
 
+@inject("shoppingListViewStore")
+@observer
 class ShoppingListItem extends Component {
   constructor(props) {
     super(props);
 
     this.onCheck = this.onCheck.bind(this);
+    this.removeProduct = this.removeProduct.bind(this);
   }
 
   render() {
@@ -24,13 +28,19 @@ class ShoppingListItem extends Component {
         <span className="quantity">
           <input type="number" name="quantity" min="1" max="100" value={product.quantity} />
         </span>
-        <span className="actions"><DeleteButton/></span>
+        <span className="actions">
+          <DeleteButton onDelete={this.removeProduct}/>
+        </span>
       </div>
     );
   }
 
   onCheck() {
 
+  }
+
+  removeProduct() {
+    this.props.shoppingListViewStore.removeProduct(this.props.product);
   }
 }
 

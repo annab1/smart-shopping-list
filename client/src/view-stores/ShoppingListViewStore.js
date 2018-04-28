@@ -3,6 +3,7 @@ import Pages from "../constants/Pages";
 import Product from "../models/Product";
 import ShoppingListApi from "../api/ShoppingListApi";
 import ShoppingList from "../models/ShoppingList";
+import ListProduct from "../models/ListProduct";
 
 class ShoppingListViewStore {
   @observable currentPage = Pages.Login;
@@ -25,11 +26,18 @@ class ShoppingListViewStore {
     this.currentPage = page;
   }
 
-  addProduct(productName) {
-    let newProd  = new Product({ name: productName });
-    return this._api.addProduct(newProd).then(action(() => {
-      this.currentShoppingList.products.push(newProd);
+  addProduct(product, amount) {
+    return this._api.addProduct(product).then(action(() => {
+      let listProduct = new ListProduct({ product, list: this.currentShoppingList, amount });
+      this.currentShoppingList.products.push(listProduct);
     }));
+  }
+
+  removeProduct(product) {
+    let lp = this.currentShoppingList.products.find(lp => lp.product.id === product.id);
+    return this._api.removeProduct(this.currentShoppingList.id, product.id, lp.amount).then(action(() => {
+      this.currentShoppingList.products.remove(lp);
+    }))
   }
 
   generateList() {

@@ -8,7 +8,9 @@ class DeleteButton extends Component {
 
   render() {
     return (
-      <button className="delete-button" onClick={this.props.onDelete}/>
+      <button className="icon-btn" onClick={this.props.onDelete}>
+        <span className="fa fa-trash" />
+      </button>
     )
   }
 

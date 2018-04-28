@@ -30,7 +30,7 @@ class ShoppingListApi {
   }
 
   addProduct(listId, productId, quantity) {
-    return this._post("list/add_product", {
+    return this._post("list/add/", {
       list_id: listId,
       product_id: productId,
       quantity
@@ -38,7 +38,7 @@ class ShoppingListApi {
   }
 
   removeProduct(listId, productId, quantity) {
-    return this._post("list/remove_product", {
+    return this._post("list/remove/", {
       list_id: listId,
       product_id: productId,
       quantity
@@ -46,13 +46,13 @@ class ShoppingListApi {
   }
 
   createList(listName) {
-    return this._post("list/create", {
+    return this._post("list/create/", {
       list_name: listName
     });
   }
 
   generateList() {
-    return this._get("list/generate");
+    return this._get("list/generate/");
   }
 
   getLists() {

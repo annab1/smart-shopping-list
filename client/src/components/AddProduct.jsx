@@ -27,7 +27,6 @@ class AddProduct extends Component {
   }
 
   render() {
-
     return (
       <section className="add-product-section">
         <Autocomplete items={this.state.matchingProducts}
@@ -61,9 +60,9 @@ class AddProduct extends Component {
   }
 
 
-  onItemSelected(product) {
+  onItemSelected(product, amount) {
     const { shoppingListViewStore } = this.props;
-    shoppingListViewStore.addProduct(product);
+    shoppingListViewStore.addProduct(product, amount);
   }
 
   searchProducts(e) {
