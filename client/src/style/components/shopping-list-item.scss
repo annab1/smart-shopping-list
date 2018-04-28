@@ -66,6 +66,18 @@
   }
 
   .quantity {
-    width: 100px;
+    width: 150px;
+
+    input {
+      width: 30px;
+      border: 1px solid silver;
+      border-radius: 3px;
+      font-size: 14px;
+      padding: 3px;
+    }
+  }
+
+  .actions {
+    width: 70;
   }
 }

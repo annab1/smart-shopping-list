@@ -33,11 +33,11 @@ class ShoppingListViewStore {
     }));
   }
 
-  removeProduct(product) {
-    let lp = this.currentShoppingList.products.find(lp => lp.product.id === product.id);
-    return this._api.removeProduct(this.currentShoppingList.id, product.id, lp.amount).then(action(() => {
-      this.currentShoppingList.products.remove(lp);
-    }))
+  removeProduct(listProduct) {
+    return this._api.removeProduct(this.currentShoppingList.id, listProduct.product.id, listProduct.amount)
+      .then(action(() => {
+        this.currentShoppingList.products.remove(lp);
+      }));
   }
 
   generateList() {

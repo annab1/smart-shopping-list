@@ -27,14 +27,14 @@ class ShoppingListPage extends Component {
         <div className="header">
           <span className="checkbox" />
           <span className="product">Product</span>
-          <span className="quantity">Quantity</span>
+          <span className="quantity">Amount</span>
           <span className="actions" />
         </div>
-        <ul className="">
+        <ul className="products-list">
           { shoppingListViewStore.currentShoppingList.products.map(
             listProduct =>
               <li className="list-item" key={listProduct.product.name}>
-                <ShoppingListItem product={listProduct.product}/>
+                <ShoppingListItem listProduct={listProduct}/>
               </li>
           ) }
         </ul>

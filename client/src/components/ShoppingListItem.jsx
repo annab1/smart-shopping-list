@@ -13,20 +13,22 @@ class ShoppingListItem extends Component {
   }
 
   render() {
-    const {product} = this.props;
+    const {listProduct} = this.props;
 
     return (
       <div className="shopping-list-item">
         <span className="checkbox">
           <input type="checkbox"
-                 id={product.name + "checkbox"}
+                 id={listProduct.product.name + "checkbox"}
                  value="None"
                  onChange={ this.onCheck } />
-          <label htmlFor={product.name + "checkbox"} />
+          <label htmlFor={listProduct.product.name + "checkbox"} />
         </span>
-        <span className="product">{product.name}</span>
+        <span className="product">{listProduct.product.name}</span>
         <span className="quantity">
-          <input type="number" name="quantity" min="1" max="100" value={product.quantity} />
+          <button className="icon-btn"><span className="fa fa-minus" /></button>
+          <input type="number" name="quantity" min="1" max="100" value={listProduct.amount} />
+          <button className="icon-btn"><span className="fa fa-plus" /></button>
         </span>
         <span className="actions">
           <DeleteButton onDelete={this.removeProduct}/>
@@ -40,7 +42,7 @@ class ShoppingListItem extends Component {
   }
 
   removeProduct() {
-    this.props.shoppingListViewStore.removeProduct(this.props.product);
+    this.props.shoppingListViewStore.removeProduct(this.props.listProduct);
   }
 }
 
