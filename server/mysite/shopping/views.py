@@ -23,7 +23,6 @@ def aggregate_data(user_id, product_id):
     user_lists = ShoppingList.objects.all().filter(user=user_id)
     users_products = ProductInstances.objects.all().filter(shopping_list__in=user_lists, product_id=product_id)
     content = []
-    content.append
     for single_list in user_lists:
         product_for_date = [x for x in users_products if x.shopping_list.id == single_list.id]
         content.append(float(product_for_date[0].amount) if product_for_date else float(0))
