@@ -18,6 +18,7 @@ class LoginPage extends Component {
       <div className="content-panel small login-page">
         <h1 className="title">Login to your account</h1>
         <section className="padded-section">
+          <img className="logo" src={require("../images/logo.png")} />
           <form className="login-form">
             <input type="text" placeholder="User name" value={this.userName}/>
             <input type="password" placeholder="Password" value={this.password}/>
