@@ -108,7 +108,8 @@ def generate_list(request):
     for product in products:
         #amount = predict_single_product(request.user.id, product.id)
         amount = predict_single_product(user_id, product.id)
-        ProductInstances.objects.create(shopping_list=list_instance, product=product, amount=amount)
+        if amount:
+            ProductInstances.objects.create(shopping_list=list_instance, product=product, amount=amount)
     serializer = ShoppingListSerializer(list_instance)
     return JsonResponse(serializer.data, safe=False)
 

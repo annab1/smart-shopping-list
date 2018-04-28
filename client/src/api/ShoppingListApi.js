@@ -25,8 +25,11 @@ class ShoppingListApi {
   }
 
   register(user) {
-    //TODO
-    return Promise.resolve();
+      return this._post("api/auth/token/obtain/", {
+          user: user
+      }).then(res => {
+          window.localStorage.setItem('jwt', res.access);
+  });
   }
 
   addProduct(listId, productId, quantity) {

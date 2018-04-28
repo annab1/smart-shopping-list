@@ -10,6 +10,12 @@ class RegistrationPage extends Component {
     this.setGender = this.setGender.bind(this);
     this.setRelationship = this.setRelationship.bind(this);
     this.register = this.register.bind(this);
+    this.firstNameChanged = this.firstNameChanged.bind(this);
+    this.lastNameChanged = this.lastNameChanged.bind(this);
+    this.emailChanged = this.emailChanged.bind(this);
+    this.childrenChanged = this.childrenChanged.bind(this);
+    this.passwordChanged = this.passwordChanged.bind(this);
+    this.birthdayChanged = this.birthdayChanged.bind(this);
 
     this.state = {
       firstName: "",
@@ -23,18 +29,47 @@ class RegistrationPage extends Component {
     };
   }
 
+
+    firstNameChanged(event) {
+        this.setState({firstName: event.target.value});
+    }
+
+    lastNameChanged(event) {
+        this.setState({lastName: event.target.value});
+    }
+
+    childrenChanged(event) {
+        this.setState({childrenCount: event.target.value});
+    }
+
+    emailChanged(event) {
+        this.setState({email: event.target.value});
+    }
+
+    childrenChanged(event) {
+        this.setState({childrenCount: event.target.value});
+    }
+
+    passwordChanged(event) {
+        this.setState({password: event.target.value});
+    }
+
+    birthdayChanged(event) {
+        this.setState({birthDay: event.target.value});
+    }
+
   render() {
     const { firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount } = this.state;
 
     return (
-      <div className="content-panel">
-        <form>
-          <input type="text" value={firstName} placeholder="First name"/>
-          <input type="text" value={lastName} placeholder="Last name"/>
-          <input type="email" value={email} placeholder="Email" />
-          <input type="password" value={password} placeholder="Password"/>
-          <input type="date" value={birthDay} />
-          <label>
+      <div className="content-panel small register-page">
+        <form className="register-form">
+          <input type="text" value={firstName} placeholder="First name" onChange={this.firstNameChanged} />
+          <input type="text" value={lastName} placeholder="Last name" onChange={this.lastNameChanged}/>
+          <input type="email" value={email} placeholder="Email" onChange={this.emailChanged}/>
+          <input type="password" value={password} placeholder="Password" onChange={this.passwordChanged}/>
+          <input type="date" value={birthDay} onChange={this.birthdayChanged} />
+          <label className="radio-inline">
             <input type="radio"
                    name="gender"
                    value={true}
@@ -43,7 +78,7 @@ class RegistrationPage extends Component {
             </input>
             Female
           </label>
-          <label>
+          <label className="radio-inline">
             <input type="radio"
                    name="gender"
                    value={false}
@@ -52,7 +87,7 @@ class RegistrationPage extends Component {
             </input>
             Male
           </label>
-          <label>
+          <label className="radio-inline">
             <input type="radio"
                    name="relationship"
                    value={true}
@@ -61,7 +96,7 @@ class RegistrationPage extends Component {
             </input>
             Single
           </label>
-          <label>
+          <label className="radio-inline">
             <input type="radio"
                    name="relationship"
                    value={false}
@@ -70,7 +105,7 @@ class RegistrationPage extends Component {
             </input>
             Not single
           </label>
-          <input type="number" min="0" max="20" value={childrenCount}/>
+          <input type="number" min="0" max="20" value={childrenCount} placeholder="Number of Children" onChange={this.childrenChanged}/>
           <button type="button" onClick={this.register}>Register</button>
         </form>
       </div>
