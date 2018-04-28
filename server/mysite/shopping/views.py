@@ -161,8 +161,8 @@ def get_product_by_id(request):
 
 def update_product_is_checked_val(request):
     product_id = request.POST["product_id"]
-    value = int(request.POST["value"])
-    value_bool = True if "True" == value else False
+    value = request.POST["value"]
+    value_bool = True if "true" == value.lower() else False
     product_instance = ProductInstances.objects.get(id=product_id)
     if not product_instance:
         pass
