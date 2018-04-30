@@ -11,6 +11,7 @@ import pandas as pd
 
 from statsmodels.tsa.arima_model import ARIMA
 from models import UserData, ProductInstances, ShoppingList
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 
 def aggregate_data(user_id, product_id):
@@ -21,11 +22,14 @@ def aggregate_data(user_id, product_id):
     :return: Dataframe containing the data sliced by timeframe
     '''
     user_lists = ShoppingList.objects.all().filter(user=user_id)
-    users_products = ProductInstances.objects.all().filter(shopping_list__in=user_lists, product_id=product_id)
+    users_products = ProductInstances.objects.all().filter(
+        shopping_list__in=user_lists, product_id=product_id)
     content = []
     for single_list in user_lists:
-        product_for_date = [x for x in users_products if x.shopping_list.id == single_list.id]
-        content.append(float(product_for_date[0].amount) if product_for_date else float(0))
+        product_for_date = [x for x in users_products if
+                            x.shopping_list.id == single_list.id]
+        content.append(
+            float(product_for_date[0].amount) if product_for_date else float(0))
     return content
     # URLS - https://stackoverflow.com/questions/11697887/converting-django-queryset-to-pandas-dataframe
     #  https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python
@@ -33,7 +37,7 @@ def aggregate_data(user_id, product_id):
 
 def predict_single_product(user_id, product_id):
     data = aggregate_data(user_id, product_id)
-    if len(set(data)) < 2: #0 or 1
+    if len(set(data)) < 2:  # 0 or 1
         return data[0]
     model = ARIMA(data, order=(1, 0, 0))
     model_fit = model.fit(disp=0)
@@ -101,15 +105,17 @@ def add_some_prodcuts_to_list(id):
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     user_id = 1
-    #user = User.objects.get(id=int(request.user.id))
+    # user = User.objects.get(id=int(request.user.id))
     user = User.objects.get(id=user_id)
-    list_instance = ShoppingList.objects.create(name=name, user=user, date=pd.datetime.now())
+    list_instance = ShoppingList.objects.create(name=name, user=user,
+                                                date=pd.datetime.now())
     products = Product.objects.all()
     for product in products:
-        #amount = predict_single_product(request.user.id, product.id)
+        # amount = predict_single_product(request.user.id, product.id)
         amount = predict_single_product(user_id, product.id)
         if amount:
-            ProductInstances.objects.create(shopping_list=list_instance, product=product, amount=amount)
+            ProductInstances.objects.create(shopping_list=list_instance,
+                                            product=product, amount=amount)
     serializer = ShoppingListSerializer(list_instance)
     return JsonResponse(serializer.data, safe=False)
 
@@ -129,8 +135,8 @@ def remove_product(request):
     list_instance = ShoppingList.objects.get(id=list_id)
     product_instance = Product.objects.get(id=product_id)
     instance = \
-    ProductInstances.objects.all().filter(shopping_list=list_instance,
-                                          product=product_instance)[0]
+        ProductInstances.objects.all().filter(shopping_list=list_instance,
+                                              product=product_instance)[0]
     if instance.amount <= quantity:
         instance.amount = 0
     else:
@@ -159,14 +165,27 @@ def get_product_by_id(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+@csrf_exempt
 def update_product_is_checked_val(request):
     product_id = request.POST["product_id"]
-    value = request.POST["value"]
-    value_bool = True if "true" == value.lower() else False
+    is_checked = request.POST["value"]
     product_instance = ProductInstances.objects.get(id=product_id)
     if not product_instance:
         pass
     else:
-        product_instance.is_checked = value_bool
+        product_instance.is_checked = is_checked.lower() == 'true'
         product_instance.save()
+    return HttpResponse('')
+
+
+@csrf_exempt
+def update_list_is_archived_val(request):
+    list_id = request.POST["list_id"]
+    is_checked = request.POST["value"]
+    list_instance = ShoppingList.objects.get(id=list_id)
+    if not list_instance:
+        pass
+    else:
+        list_instance.is_archived = is_checked.lower() == 'true'
+        list_instance.save()
     return HttpResponse('')
