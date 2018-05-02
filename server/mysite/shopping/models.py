@@ -23,7 +23,8 @@ class ShoppingList(models.Model):
     name = models.CharField(max_length=200)
     date = models.DateTimeField('date')
     user = models.ForeignKey(User)
-
+    is_archived = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.name
 
