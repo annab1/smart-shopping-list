@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {inject, observer} from "mobx-react";
 import ShoppingListItem from "../components/ShoppingListItem";
 import AddProduct from "../components/AddProduct";
+import Pages from "../constants/Pages";
+import BackButton from "../components/BackButton";
 
 @inject("shoppingListViewStore")
 @observer
@@ -22,6 +24,7 @@ class ShoppingListPage extends Component {
 
     return (
       <div className="content-panel">
+        <BackButton page={Pages.ListsPage} />
         <h1 className="title">Shopping List</h1>
 
         <div className="header">
