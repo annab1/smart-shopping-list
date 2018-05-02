@@ -105,12 +105,11 @@ def add_some_prodcuts_to_list(id):
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     user = User.objects.get(id=int(request.user.id))
-    # user = User.objects.get(id=int(request.user.id))
     list_instance = ShoppingList.objects.create(name=name, user=user,
                                                 date=pd.datetime.now())
     products = Product.objects.all()
     for product in products:
-        # amount = predict_single_product(request.user.id, product.id)
+        amount = predict_single_product(request.user.id, product.id)
         if amount:
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
@@ -172,7 +171,7 @@ def update_product_is_checked_val(request):
     if not product_instance:
         pass
     else:
-        product_instance.is_checked = is_checked.lower() == 'true'
+        product_instance.is_checked = is_checked
         product_instance.save()
     return HttpResponse('')
 
