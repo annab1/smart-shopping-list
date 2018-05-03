@@ -1,5 +1,6 @@
 from django.http import JsonResponse, HttpResponse
 import pandas as pd
+import json
 import datetime
 import time
 # Create your views here.
@@ -58,10 +59,13 @@ def get_products(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+@csrf_exempt
 def add_product(request):
-    list_id = request.POST["list_id"]
-    product_id = request.POST["product_id"]
-    quantity = int(request.POST["quantity"])
+    params = json.loads(request.body)
+
+    list_id = params["list_id"]
+    product_id = params["product_id"]
+    quantity = int(params["quantity"])
     list_instance = ShoppingList.objects.get(id=list_id)
     product_instance = Product.objects.get(id=product_id)
     instances = ProductInstances.objects.all().filter(
@@ -78,8 +82,11 @@ def add_product(request):
 
 
 def create_list(request):
-    name = request.POST['name']
-    user = User.objects.get(id=int(request.user.id))
+    params = json.loads(request.body)
+    name = params['name']
+    # TODO: request.user.id
+
+    user = User.objects.get(id=1)
     ShoppingList.objects.create(name=name, user=user, date=datetime.now())
     return HttpResponse('')
 
@@ -104,12 +111,15 @@ def add_some_prodcuts_to_list(id):
 
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
-    user = User.objects.get(id=int(request.user.id))
+    # TODO: request.user.id
+    user = User.objects.get(id=1)
     list_instance = ShoppingList.objects.create(name=name, user=user,
                                                 date=pd.datetime.now())
     products = Product.objects.all()
+    # TODO: request.user.id
+
     for product in products:
-        amount = predict_single_product(request.user.id, product.id)
+        amount = predict_single_product(1, product.id)
         if amount:
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
@@ -118,17 +128,19 @@ def generate_list(request):
 
 
 def update_list(request):
-    list = ShoppingList.objects.get(id=request.POST['id'])
-    list.name = request.POST['name']
-    list.save()
+    params = json.loads(request.body)
+    shopping_list = ShoppingList.objects.get(id=params['id'])
+    shopping_list.name = params['name']
+    shopping_list.save()
 
     return HttpResponse('')
 
 
 def remove_product(request):
-    list_id = request.POST["list_id"]
-    product_id = request.POST["product_id"]
-    quantity = int(request.POST["quantity"])
+    params = json.loads(request.body)
+    list_id = params["list_id"]
+    product_id = params["product_id"]
+    quantity = int(params["quantity"])
     list_instance = ShoppingList.objects.get(id=list_id)
     product_instance = Product.objects.get(id=product_id)
     instance = \
@@ -150,7 +162,8 @@ def get_shopping_list(request):
 
 
 def get_shopping_lists(request):
-    user = User.objects.get(id=int(request.user.id))
+    # TODO: request.user.id
+    user = User.objects.get(id=1)
     list_instances = ShoppingList.objects.filter(user=user)
     serializer = ShoppingListSerializer(list_instances, many=True)
     return JsonResponse(serializer.data, safe=False)
@@ -165,8 +178,9 @@ def get_product_by_id(request):
 
 @csrf_exempt
 def update_product_is_checked_val(request):
-    product_id = request.POST["product_id"]
-    is_checked = request.POST["value"]
+    params = json.loads(request.body)
+    product_id = params["product_id"]
+    is_checked = params["value"]
     product_instance = ProductInstances.objects.get(id=product_id)
     if not product_instance:
         pass
@@ -178,8 +192,9 @@ def update_product_is_checked_val(request):
 
 @csrf_exempt
 def update_list_is_archived_val(request):
-    list_id = request.POST["list_id"]
-    is_checked = request.POST["value"]
+    params = json.loads(request.body)
+    list_id = params["list_id"]
+    is_checked = params["value"]
     list_instance = ShoppingList.objects.get(id=list_id)
     if not list_instance:
         pass
