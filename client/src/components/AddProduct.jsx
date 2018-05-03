@@ -23,7 +23,8 @@ class AddProduct extends Component {
     this.renderAutocompleteMenu = this.renderAutocompleteMenu.bind(this);
     this.onItemSelected = this.onItemSelected.bind(this);
     this.searchProducts = this.searchProducts.bind(this);
-    this.state = { matchingProducts: [] , searchValue: "" };
+    this.addProduct = this.addProduct.bind(this);
+    this.state = { matchingProducts: [] , searchValue: "", selectedProduct: null };
   }
 
   render() {
@@ -40,7 +41,7 @@ class AddProduct extends Component {
                       getItemValue={item => item.name}
                       onChange={this.searchProducts}/>
         <button className="btn action-btn"
-                onClick={this.addPro}>Add</button>
+                onClick={this.addProduct}>Add</button>
       </section>
     );
   }
@@ -60,18 +61,32 @@ class AddProduct extends Component {
   }
 
 
-  onItemSelected(product, amount) {
+  onItemSelected(name, product) {
     const { shoppingListViewStore } = this.props;
-    shoppingListViewStore.addProduct(product, amount);
+    this.setState({searchValue: product.name, selectedProduct: product.id});
+    //shoppingListViewStore.addProduct(listId,product, amount);
   }
+
+    // onSelect(product) {
+    //     const { shoppingListViewStore } = this.props;
+    //     this.setState({searchValue: product.name, selectedProduct: getItemValue()});
+    //     //shoppingListViewStore.addProduct(listId,product, amount);
+    // }
 
   searchProducts(e) {
     const { shoppingListViewStore } = this.props;
     let searchValue = e.target.value;
     shoppingListViewStore.getProducts(searchValue).then(products =>
-      this.setState({ matchingProducts: products, searchValue: searchValue })
+      this.setState({ matchingProducts: products, searchValue: searchValue, selectedProduct: null })
     );
   }
+
+  addProduct() {
+    if (this.state.selectedProduct) {
+      this.props.shoppingListViewStore.addProduct(this.state.selectedProduct);
+    }
+  }
 }
+
 
 export default AddProduct;

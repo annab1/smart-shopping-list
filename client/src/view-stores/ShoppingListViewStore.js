@@ -26,8 +26,8 @@ class ShoppingListViewStore {
     this.currentPage = page;
   }
 
-  addProduct(product, amount) {
-    return this._api.addProduct(product).then(action(() => {
+  addProduct(product) {
+    return this._api.addProduct(this.currentShoppingList.id, product, 1).then(action(() => {
       let listProduct = new ListProduct({ product, list: this.currentShoppingList, amount });
       this.currentShoppingList.products.push(listProduct);
     }));

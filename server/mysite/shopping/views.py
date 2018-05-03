@@ -57,7 +57,7 @@ def get_products(request):
     serializer = ProductSerializer(products, many=True)
     return JsonResponse(serializer.data, safe=False)
 
-
+@csrf_exempt
 def add_product(request):
     list_id = request.POST["list_id"]
     product_id = request.POST["product_id"]
