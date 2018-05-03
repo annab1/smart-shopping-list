@@ -46,7 +46,7 @@ class LoginPage extends Component {
     userViewStore.login(this.userName, this.password).then(() => {
       shoppingListViewStore.setCurrentPage(Pages.ListsPage);
     }).catch(err => {
-      this.setState({ errMessage: err });
+      this.setState({ errMessage: err.toString() });
     });
   }
 
