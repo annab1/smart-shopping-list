@@ -21,6 +21,8 @@
       min-width: 0 !important;
       cursor: pointer;
       border: 1px solid silver;
+      overflow-x: auto;
+      max-height: 300px;
     }
   }
 }

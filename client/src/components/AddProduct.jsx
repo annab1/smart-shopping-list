@@ -63,7 +63,7 @@ class AddProduct extends Component {
 
   onItemSelected(name, product) {
     const { shoppingListViewStore } = this.props;
-    this.setState({searchValue: product.name, selectedProduct: product.id});
+    this.setState({searchValue: product.name, selectedProduct: product});
     //shoppingListViewStore.addProduct(listId,product, amount);
   }
 

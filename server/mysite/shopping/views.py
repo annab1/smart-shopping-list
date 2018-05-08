@@ -135,7 +135,7 @@ def update_list(request):
 
     return HttpResponse('')
 
-
+@csrf_exempt
 def remove_product(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
