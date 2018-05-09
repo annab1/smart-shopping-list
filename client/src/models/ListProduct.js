@@ -1,6 +1,9 @@
 import Product from "./Product";
+import { observable } from "mobx";
 
 class ListProduct {
+  @observable amount;
+
   constructor(config = {}) {
     this.product = config.product;
     this.list = config.list;

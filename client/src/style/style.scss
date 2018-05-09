@@ -80,6 +80,7 @@ input[type="text"], input[type="password"], input[role="combobox"] {
   line-height: 24px;
   font-size: 16px;
   background: transparent;
+  outline: none;
 
   &:hover {
     color: $layout-main-color;
@@ -102,6 +103,9 @@ input[type="text"], input[type="password"], input[role="combobox"] {
   .table-list-item-name {
     display: table-cell;
     padding-right: 5px;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    overflow: hidden;
   }
 }
 

@@ -10,11 +10,6 @@ class ShoppingListViewStore {
   @observable lists = [];
   @observable currentShoppingList = null;
 
-  @computed
-  get uncheckedItems() {
-    return this.currentShoppingList.products;
-  }
-
   constructor() {
     this._api = ShoppingListApi;
 

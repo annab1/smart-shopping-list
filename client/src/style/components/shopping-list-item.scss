@@ -6,6 +6,11 @@
   align-items: center;
   padding: 5px 15px;
 
+  &.checked {
+    background: #b7b4b4;
+    text-decoration: line-through;
+  }
+
   .checkbox {
     position: relative;
     width: 22px;
@@ -66,7 +71,8 @@
   }
 
   .quantity {
-    width: 150px;
+    width: 110px;
+    text-align: center;
 
     input {
       width: 30px;
@@ -75,9 +81,15 @@
       font-size: 14px;
       padding: 3px;
     }
+
+    .amount-label {
+      display: inline-block;
+      width: 30px;
+    }
   }
 
   .actions {
-    width: 70;
+    width: 70px;
+    text-align: center;
   }
 }

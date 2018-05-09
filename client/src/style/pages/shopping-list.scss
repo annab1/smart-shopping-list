@@ -3,10 +3,10 @@
 .header {
   display: flex;
   border-bottom: 1px solid silver;
-  padding-bottom: 5px;
+  padding: 5px 15px;
 
   .checkbox {
-    width: 50px;
+    width: 42px;
   }
 
   .product {
@@ -14,7 +14,7 @@
   }
 
   .quantity {
-    width: 150px;
+    width: 110px;
     text-align: center;
   }
 

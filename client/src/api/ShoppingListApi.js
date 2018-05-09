@@ -64,7 +64,7 @@ class ShoppingListApi {
 
   setCheckProduct(listProduct, isChecked) {
     return this._post("list/product/check/",
-      { product_id: listProduct.id,
+      { product_id: listProduct.product.id,
         value: isChecked
       });
   }
