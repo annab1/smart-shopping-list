@@ -41,12 +41,12 @@ class ProductInstances(models.Model):
                                                           self.shopping_list)
 
 
-class UserData(models.Model):
+class  UserData(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateTimeField('date of birth')
-    gender = models.CharField(max_length=2, choices=(("Male", "Male"),
-                                                     ("Female",
+    gender = models.CharField(max_length=2, choices=(("M", "Male"),
+                                                     ("F",
                                                       "Female")))
-    relationship = models.CharField(max_length=2, choices=(("Single", "Single"),
-                                                           ("Not Single",
+    relationship = models.CharField(max_length=2, choices=(("S", "Single"),
+                                                           ("N",
                                                             "Not Single")))

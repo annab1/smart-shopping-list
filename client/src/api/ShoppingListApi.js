@@ -15,6 +15,10 @@ class ShoppingListApi {
     });
   }
 
+  authenticate() {
+    return this._get("api/auth"); //TODO: ??
+  }
+
   login(userName, password) {
     return this._post("api/auth/token/obtain/", {
       username: userName || "admin", //TODO - remove
@@ -44,7 +48,6 @@ class ShoppingListApi {
     return this._post("list/remove/", {
       list_id: listId,
       product_id: productId,
-      quantity
     });
   }
 
@@ -65,6 +68,7 @@ class ShoppingListApi {
   setCheckProduct(listProduct, isChecked) {
     return this._post("list/product/check/",
       { product_id: listProduct.product.id,
+        list_id: listProduct.list.id,
         value: isChecked
       });
   }
