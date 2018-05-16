@@ -76,6 +76,13 @@ class ShoppingListApi {
     });
   }
 
+    archiveList(listId, archiveValue) {
+        return this._post("list/archive", {
+            list_id: listId,
+            value: archiveValue
+        });
+    }
+
   getListProducts(listId) {
     return this._get(`list/get?list_id=${listId}`);
   }

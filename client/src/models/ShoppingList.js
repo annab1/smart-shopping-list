@@ -10,6 +10,7 @@ class ShoppingList {
     this.date = config.date;
     this.name = config.name || "";
     this.products = [];
+    this.isArchived = config.isArchived || false;
   }
 
   static parse(apiList) {
@@ -18,6 +19,7 @@ class ShoppingList {
     list.date = moment(apiList.date);
     list.name = apiList.name;
     list.products = apiList.products.map( p => ListProduct.parse(p, list));
+    list.isArchived = apiList.is_archived;
 
     return list;
   }

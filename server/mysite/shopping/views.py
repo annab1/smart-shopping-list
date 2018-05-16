@@ -199,6 +199,6 @@ def update_list_is_archived_val(request):
     if not list_instance:
         pass
     else:
-        list_instance.is_archived = is_checked.lower() == 'true'
+        list_instance.is_archived = is_checked
         list_instance.save()
     return HttpResponse('')

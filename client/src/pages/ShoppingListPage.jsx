@@ -12,6 +12,8 @@ class ShoppingListPage extends Component {
   constructor(props) {
     super(props);
 
+      this.closeList = this.closeList.bind(this);
+
   }
 
   render() {
@@ -37,14 +39,21 @@ class ShoppingListPage extends Component {
           { shoppingListViewStore.currentShoppingList.products.map(
             listProduct =>
               <li className="list-item" key={listProduct.product.name}>
-                <ShoppingListItem listProduct={listProduct}/>
+                <ShoppingListItem listProduct={listProduct} isArchived={shoppingListViewStore.currentShoppingList.isArchived}/>
               </li>
           ) }
         </ul>
         <AddProduct />
+          <button type="button" className="btn action-btn add-btn" onClick={this.closeList}>Close List</button>
       </div>
     );
   }
+
+    closeList() {
+        // const { firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount } = this.state;
+        // const { shoppingListViewStore, userViewStore } = this.props;
+        this.props.shoppingListViewStore.closeList(true);
+    }
 
 }
 

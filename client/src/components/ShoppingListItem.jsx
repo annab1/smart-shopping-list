@@ -17,11 +17,11 @@ class ShoppingListItem extends Component {
   }
 
   render() {
-    const {listProduct} = this.props;
+    const {listProduct, isArchived} = this.props;
 
     return (
       <div className={classnames("shopping-list-item", {"checked": listProduct.isChecked})}>
-        <span className="checkbox">
+        <span className="checkbox" hidden={isArchived}>
           <input type="checkbox"
                  id={listProduct.product.name + "checkbox"}
                  value={listProduct.isChecked}
@@ -29,7 +29,7 @@ class ShoppingListItem extends Component {
           <label htmlFor={listProduct.product.name + "checkbox"} />
         </span>
         <span className="product">{listProduct.product.name}</span>
-        <span className="quantity">
+        <span className="quantity" hidden={isArchived}>
           <button className="icon-btn" onClick={this.onMinusClicked}>
             <span className="fa fa-minus" />
           </button>
@@ -38,7 +38,7 @@ class ShoppingListItem extends Component {
             <span className="fa fa-plus" />
           </button>
         </span>
-        <span className="actions">
+        <span className="actions" hidden={isArchived}>
           <DeleteButton onDelete={this.removeProduct}/>
         </span>
       </div>

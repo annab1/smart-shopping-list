@@ -58,6 +58,12 @@ class ShoppingListViewStore {
     }));
   }
 
+  closeList(value) {
+      return this._api.archiveList(this.currentShoppingList.id, value).then(action(() => {
+      this.currentShoppingList.isArchived = value;
+  }));
+  }
+
 }
 
 export default new ShoppingListViewStore();
