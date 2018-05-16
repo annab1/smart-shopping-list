@@ -32,3 +32,26 @@
 .products-list {
   overflow-y: auto;
 }
+
+.shopping-list-name {
+  padding: 3px 5px;
+  display: flex;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid black;
+    border-radius: 3px;
+
+    .fa {
+      visibility: visible;
+    }
+  }
+
+  .fa {
+    margin-left: 8px;
+    font-size: 18px;
+    visibility: hidden;
+    align-self: center;
+  }
+
+}

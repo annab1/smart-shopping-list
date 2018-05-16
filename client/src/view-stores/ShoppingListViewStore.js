@@ -58,6 +58,12 @@ class ShoppingListViewStore {
     }));
   }
 
+  updateName(newName) {
+    return this._api.updateListName(this.currentShoppingList.id, newName).then(action(() => {
+      this.currentShoppingList.name = newName;
+    }));
+  }
+
 }
 
 export default new ShoppingListViewStore();
