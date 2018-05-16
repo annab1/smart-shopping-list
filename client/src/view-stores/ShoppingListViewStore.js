@@ -6,7 +6,7 @@ import ShoppingList from "../models/ShoppingList";
 import ListProduct from "../models/ListProduct";
 
 class ShoppingListViewStore {
-  @observable currentPage = Pages.Login;
+  @observable currentPage;
   @observable lists = [];
   @observable currentShoppingList = null;
 

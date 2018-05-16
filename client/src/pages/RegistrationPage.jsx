@@ -62,8 +62,9 @@ class RegistrationPage extends Component {
     const { firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount } = this.state;
 
     return (
-      <div className="content-panel small register-page">
-        <form className="register-form">
+      <div className="content-panel register-page">
+        <h1 className="title">Registration</h1>
+        <form className="register-form padded-section">
           <input type="text" value={firstName} placeholder="First name" onChange={this.firstNameChanged} />
           <input type="text" value={lastName} placeholder="Last name" onChange={this.lastNameChanged}/>
           <input type="email" value={email} placeholder="Email" onChange={this.emailChanged}/>
@@ -106,7 +107,7 @@ class RegistrationPage extends Component {
             Not single
           </label>
           <input type="number" min="0" max="20" value={childrenCount} placeholder="Number of Children" onChange={this.childrenChanged}/>
-          <button type="button" onClick={this.register}>Register</button>
+          <button className="btn action-btn" onClick={this.register}>Register</button>
         </form>
       </div>
     );

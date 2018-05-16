@@ -15,6 +15,10 @@ class ShoppingListApi {
     });
   }
 
+  authenticate() {
+    return this._get("api/auth"); //TODO: ??
+  }
+
   login(userName, password) {
     return this._post("api/auth/token/obtain/", {
       username: userName || "admin", //TODO - remove

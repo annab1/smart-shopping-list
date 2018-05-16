@@ -5,6 +5,7 @@
 @import "pages/lists";
 @import "pages/shopping-list";
 @import "pages/registration";
+@import "components/spinner";
 @import "components/shopping-list-tile";
 @import "components/shopping-list-item";
 @import "components/add-product";
@@ -25,7 +26,7 @@ strong {
   font-weight: bold;
 }
 
-input[type="text"], input[type="password"], input[role="combobox"] {
+input[type="text"], input[type="password"], input[role="combobox"], input[type="email"] {
   border: 1px solid $border-color;
   border-radius: $border-radius;
   font-size: 16px;
