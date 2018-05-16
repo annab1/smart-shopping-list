@@ -44,7 +44,6 @@ class ShoppingListApi {
     return this._post("list/remove/", {
       list_id: listId,
       product_id: productId,
-      quantity
     });
   }
 
@@ -65,6 +64,7 @@ class ShoppingListApi {
   setCheckProduct(listProduct, isChecked) {
     return this._post("list/product/check/",
       { product_id: listProduct.product.id,
+        list_id: listProduct.list.id,
         value: isChecked
       });
   }
