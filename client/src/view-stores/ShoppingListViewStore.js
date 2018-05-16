@@ -6,7 +6,7 @@ import ShoppingList from "../models/ShoppingList";
 import ListProduct from "../models/ListProduct";
 
 class ShoppingListViewStore {
-  @observable currentPage = Pages.Login;
+  @observable currentPage;
   @observable lists = [];
   @observable currentShoppingList = null;
 
@@ -55,6 +55,12 @@ class ShoppingListViewStore {
   getLists() {
     return this._api.getLists().then(action(lists => {
       this.lists = lists.map(l => ShoppingList.parse(l));
+    }));
+  }
+
+  updateName(newName) {
+    return this._api.updateListName(this.currentShoppingList.id, newName).then(action(() => {
+      this.currentShoppingList.name = newName;
     }));
   }
 

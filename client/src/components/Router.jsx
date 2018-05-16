@@ -5,8 +5,9 @@ import RegistrationPage from "../pages/RegistrationPage";
 import ShoppingListPage from "../pages/ShoppingListPage";
 import LoginPage from "../pages/LoginPage";
 import ListsPage from "../pages/ListsPage";
+import Spinner from "./Spinner";
 
-@inject("shoppingListViewStore")
+@inject("shoppingListViewStore", "userViewStore")
 @observer
 class Router extends Component {
   _pageComponents = {
@@ -16,11 +17,28 @@ class Router extends Component {
     [Pages.ListsPage]: ListsPage
   };
 
+  componentDidMount() {
+    const { shoppingListViewStore, userViewStore } = this.props;
+
+    userViewStore.authenticate()
+      .then(() => {
+        shoppingListViewStore.setCurrentPage(Pages.ListsPage);
+      })
+      .catch(() => {
+        shoppingListViewStore.setCurrentPage(Pages.Login);
+      });
+  }
+
   render() {
-    const Page = this._pageComponents[this.props.shoppingListViewStore.currentPage];
+    const { shoppingListViewStore } = this.props;
+    if (!shoppingListViewStore.currentPage) {
+      return <Spinner />;
+    }
+
+    const Page = this._pageComponents[shoppingListViewStore.currentPage];
 
     return (<div className="page-layout">
-        <Page/>
+      <Page/>
     </div>);
   }
 }

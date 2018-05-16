@@ -14,12 +14,16 @@ from models import UserData, ProductInstances, ShoppingList
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 
+@csrf_exempt
+@csrf_exempt
+@csrf_exempt
 def get_categories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
     return JsonResponse(serializer.data, safe=False)
 
 
+@csrf_exempt
 def get_products(request):
     prefix_filter = request.GET["prefix"]
     products = Product.objects.all().filter(name__icontains=prefix_filter)
@@ -49,6 +53,7 @@ def add_product(request):
     return HttpResponse('')
 
 
+@csrf_exempt
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
@@ -60,6 +65,7 @@ def create_list(request):
 
 
 # The following code adds some products to the list for test purposes. IT SHOULD BE DELETED
+@csrf_exempt
 def add_some_prodcuts_to_list(id):
     list_id = id
     product_id = 2
@@ -77,6 +83,7 @@ def add_some_prodcuts_to_list(id):
         instances[0].save()
 
 
+@csrf_exempt
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     # TODO: request.user.id
@@ -95,6 +102,7 @@ def generate_list(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+@csrf_exempt
 def update_list(request):
     params = json.loads(request.body)
     shopping_list = ShoppingList.objects.get(id=params['id'])
@@ -103,25 +111,19 @@ def update_list(request):
 
     return HttpResponse('')
 
+
 @csrf_exempt
 def remove_product(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
     product_id = params["product_id"]
-    quantity = int(params["quantity"])
-    list_instance = ShoppingList.objects.get(id=list_id)
-    product_instance = Product.objects.get(id=product_id)
     instance = \
-        ProductInstances.objects.all().filter(shopping_list=list_instance,
-                                              product=product_instance)[0]
-    if instance.amount <= quantity:
-        instance.amount = 0
-    else:
-        instance.amount -= quantity
-    instance.save()
+        ProductInstances.objects.filter(shopping_list_id=list_id,
+                                           product_id=product_id).delete()
     return HttpResponse('')
 
 
+@csrf_exempt
 def get_shopping_list(request):
     list_id = request.GET["list_id"]
     list_instance = ShoppingList.objects.get(id=list_id)
@@ -129,6 +131,7 @@ def get_shopping_list(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+@csrf_exempt
 def get_shopping_lists(request):
     # TODO: request.user.id
     user = User.objects.get(id=1)
@@ -137,6 +140,7 @@ def get_shopping_lists(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+@csrf_exempt
 def get_product_by_id(request):
     prod_id = request.GET["id"]
     product = Product.objects.all().filter(id=prod_id)[0]
@@ -148,8 +152,10 @@ def get_product_by_id(request):
 def update_product_is_checked_val(request):
     params = json.loads(request.body)
     product_id = params["product_id"]
+    list_id = params["list_id"]
     is_checked = params["value"]
-    product_instance = ProductInstances.objects.get(id=product_id)
+    product_instance = ProductInstances.objects.get(product_id=product_id,
+                                                    shopping_list_id=list_id)
     if not product_instance:
         pass
     else:
