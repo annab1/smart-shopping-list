@@ -94,7 +94,7 @@ def generate_list(request):
     # TODO: request.user.id
 
     for product in products:
-        amount = predict_single_product(1, product.id)
+        amount = round(predict_single_product(1, product.id))
         if amount:
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
