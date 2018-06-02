@@ -26,7 +26,8 @@ from shopping.views import (get_categories, get_products, create_list,
                             update_list, get_shopping_list, get_shopping_lists,
                             get_product_by_id, generate_list,
                             update_product_is_checked_val,
-                            update_list_is_archived_val)
+                            update_list_is_archived_val,
+                            permission_denied)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -48,6 +49,7 @@ urlpatterns = [
     url(r'^list/getall/', get_shopping_lists),
     url(r'^list/product/check', update_product_is_checked_val),
     url(r'^list/archive', update_list_is_archived_val),
+    url(r'^denied', permission_denied),
 
     # Api for Auth
     url(r'^$', generic.RedirectView.as_view(

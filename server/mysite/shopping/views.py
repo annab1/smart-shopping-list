@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 @csrf_exempt
 @api_view(['GET'])
-@login_required
+@login_required(login_url="/denied/")
 def get_categories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
@@ -31,7 +31,7 @@ def get_categories(request):
 
 @csrf_exempt
 @api_view(['GET'])
-@login_required
+@login_required(login_url="/denied/")
 def get_products(request):
     prefix_filter = request.GET["prefix"]
     products = Product.objects.all().filter(name__icontains=prefix_filter)
@@ -41,7 +41,7 @@ def get_products(request):
 
 @csrf_exempt
 @api_view(['POST'])
-@login_required
+@login_required(login_url="/denied/")
 def add_product(request):
     params = json.loads(request.body)
 
@@ -65,7 +65,7 @@ def add_product(request):
 
 @csrf_exempt
 @api_view(['POST'])
-@login_required
+@login_required(login_url="/denied/")
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
@@ -97,7 +97,7 @@ def add_some_prodcuts_to_list(id):
 
 @csrf_exempt
 @api_view(['GET'])
-@login_required
+@login_required(login_url="/denied/")
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     # TODO: request.user.id
@@ -118,7 +118,7 @@ def generate_list(request):
 
 @csrf_exempt
 @api_view(['POST'])
-@login_required
+@login_required(login_url="/denied/")
 def update_list(request):
     params = json.loads(request.body)
     shopping_list = ShoppingList.objects.get(id=params['id'])
@@ -130,7 +130,7 @@ def update_list(request):
 
 @csrf_exempt
 @api_view(['POST'])
-@login_required
+@login_required(login_url="/denied/")
 def remove_product(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
@@ -143,7 +143,7 @@ def remove_product(request):
 
 @csrf_exempt
 @api_view(['GET'])
-@login_required
+@login_required(login_url="/denied/")
 def get_shopping_list(request):
     list_id = request.GET["list_id"]
     list_instance = ShoppingList.objects.get(id=list_id)
@@ -153,7 +153,7 @@ def get_shopping_list(request):
 
 @csrf_exempt
 @api_view(['GET'])
-@login_required
+@login_required(login_url="/denied/")
 def get_shopping_lists(request):
     # TODO: request.user.id
     user = User.objects.get(id=1)
@@ -164,7 +164,7 @@ def get_shopping_lists(request):
 
 @csrf_exempt
 @api_view(['GET'])
-@login_required
+@login_required(login_url="/denied/")
 def get_product_by_id(request):
     prod_id = request.GET["id"]
     product = Product.objects.all().filter(id=prod_id)[0]
@@ -174,7 +174,7 @@ def get_product_by_id(request):
 
 @csrf_exempt
 @api_view(['POST'])
-@login_required
+@login_required(login_url="/denied/")
 def update_product_is_checked_val(request):
     params = json.loads(request.body)
     product_id = params["product_id"]
@@ -192,7 +192,7 @@ def update_product_is_checked_val(request):
 
 @csrf_exempt
 @api_view(['POST'])
-@login_required
+@login_required(login_url="/denied/")
 def update_list_is_archived_val(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
@@ -204,3 +204,8 @@ def update_list_is_archived_val(request):
         list_instance.is_archived = is_checked.lower() == 'true'
         list_instance.save()
     return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@csrf_exempt
+def permission_denied(request):
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
