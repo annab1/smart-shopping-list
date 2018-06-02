@@ -37,6 +37,9 @@
   padding: 3px 5px;
   display: flex;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 
   &:hover {
     border: 1px solid black;

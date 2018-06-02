@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import DeleteButton from "./DeleteButton";
 import {inject, observer} from "mobx-react";
 import { action } from "mobx";
-import classnames from "classnames";
+import classNames from "classnames";
 
 @inject("shoppingListViewStore")
 @observer
@@ -20,10 +20,11 @@ class ShoppingListItem extends Component {
     const {listProduct} = this.props;
 
     return (
-      <div className={classnames("shopping-list-item", {"checked": listProduct.isChecked})}>
+      <div className={classNames("shopping-list-item", {"checked": listProduct.isChecked})}>
         <span className="checkbox">
           <input type="checkbox"
                  id={listProduct.product.name + "checkbox"}
+                 checked={listProduct.isChecked}
                  value={listProduct.isChecked}
                  onChange={ this.onCheck } />
           <label htmlFor={listProduct.product.name + "checkbox"} />

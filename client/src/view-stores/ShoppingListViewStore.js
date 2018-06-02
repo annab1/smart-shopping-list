@@ -7,7 +7,7 @@ import ListProduct from "../models/ListProduct";
 
 class ShoppingListViewStore {
   @observable currentPage;
-  @observable lists = [];
+  @observable lists;
   @observable currentShoppingList = null;
 
   constructor() {

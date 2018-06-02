@@ -14,8 +14,10 @@ class ListsPage extends Component {
     this.loadList = this.loadList.bind(this);
   }
 
-  componentWillMount() {
-    this.props.shoppingListViewStore.getLists();
+  componentDidMount() {
+    if (!this.props.shoppingListViewStore.lists) {
+      this.props.shoppingListViewStore.getLists();
+    }
   }
 
   render() {

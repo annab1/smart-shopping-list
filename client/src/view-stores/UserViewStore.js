@@ -19,10 +19,6 @@ class UserViewStore {
        this.currentUser = user;
     }));
   }
-
-  authenticate() {
-    return this._api.authenticate();
-  }
 }
 
 export default new UserViewStore();
