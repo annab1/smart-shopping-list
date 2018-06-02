@@ -20,7 +20,7 @@ class ShoppingListItem extends Component {
     const {listProduct, isArchived} = this.props;
 
     return (
-      <div className={classnames("shopping-list-item", {"checked": listProduct.isChecked})}>
+      <div className={classNames("shopping-list-item", {"checked": listProduct.isChecked})}>
         <span className="checkbox">
           <input type="checkbox"
                  id={listProduct.product.name + "checkbox"}
