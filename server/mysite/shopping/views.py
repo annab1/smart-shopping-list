@@ -37,6 +37,7 @@ def get_products(request):
 
 
 @csrf_exempt
+@api_view(['POST'])
 def add_product(request):
     params = json.loads(request.body)
 
@@ -59,6 +60,7 @@ def add_product(request):
 
 
 @csrf_exempt
+@api_view(['POST'])
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
