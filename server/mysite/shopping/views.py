@@ -1,5 +1,3 @@
-from django.http import JsonResponse, HttpResponse
-import pandas as pd
 import json
 import datetime
 import time
@@ -7,7 +5,6 @@ from shopping.models import Category, Product, ShoppingList, ProductInstances
 from shopping.serializers import CategorySerializer, ProductSerializer, \
     ProductInstancesSerializer, ShoppingListSerializer
 from shopping.predictions import predict_single_product
-from django.contrib.auth.models import User
 import pandas as pd
 
 from models import UserData, ProductInstances, ShoppingList
@@ -16,6 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 @csrf_exempt
@@ -69,10 +67,8 @@ def add_product(request):
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
-    # TODO: request.user.id
-
-    user = User.objects.get(id=1)
-    ShoppingList.objects.create(name=name, user=user, date=datetime.now())
+    ShoppingList.objects.create(name=name, user=request.user,
+                                date=datetime.now())
     return Response(status=status.HTTP_200_OK)
 
 
@@ -100,15 +96,11 @@ def add_some_prodcuts_to_list(id):
 @login_required(login_url="/denied/")
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
-    # TODO: request.user.id
-    user = User.objects.get(id=1)
-    list_instance = ShoppingList.objects.create(name=name, user=user,
+    list_instance = ShoppingList.objects.create(name=name, user=request.user,
                                                 date=pd.datetime.now())
     products = Product.objects.all()
-    # TODO: request.user.id
-
     for product in products:
-        amount = round(predict_single_product(1, product.id))
+        amount = round(predict_single_product(request.user.id, product.id))
         if amount:
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
@@ -155,9 +147,7 @@ def get_shopping_list(request):
 @api_view(['GET'])
 @login_required(login_url="/denied/")
 def get_shopping_lists(request):
-    # TODO: request.user.id
-    user = User.objects.get(id=1)
-    list_instances = ShoppingList.objects.filter(user=user)
+    list_instances = ShoppingList.objects.filter(user=request.user)
     serializer = ShoppingListSerializer(list_instances, many=True)
     return Response(serializer.data)
 
@@ -204,6 +194,31 @@ def update_list_is_archived_val(request):
         list_instance.is_archived = is_checked.lower() == 'true'
         list_instance.save()
     return Response(status=status.HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(['POST'])
+def create_user(request):
+    params = json.loads(request.body)
+    username = params["username"]
+    first_name = params["first_name"]
+    last_name = params["last_name"]
+    password = params["password"]
+    email = params["email"]
+    birth_date = params["birth_date"]
+    gender = params["gender"]
+    relationship = params["relationship"]
+
+    user = User.objects.create_user(username=username, first_name=first_name,
+                                    last_name=last_name, password=password,
+                                    email=email)
+    user_data = UserData(user=user, gender=gender, relationship=relationship,
+                         birth_date=datetime.datetime.fromtimestamp(
+                             int(birth_date)))
+    user_data.save()
+
+    return Response(status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @csrf_exempt
