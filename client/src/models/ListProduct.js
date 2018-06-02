@@ -3,6 +3,7 @@ import { observable } from "mobx";
 
 class ListProduct {
   @observable amount;
+  @observable isChecked;
 
   constructor(config = {}) {
     this.product = config.product;

@@ -10,30 +10,33 @@ class ShoppingListApi {
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${window.localStorage.getItem('jwt')}`;
+      if (config.url !== BASE_URL + "user/create/") {
+        config.headers.Authorization = `Bearer ${window.localStorage.getItem('jwt')}`;
+      }
       return config;
     });
   }
 
-  authenticate() {
-    return this._get("api/auth"); //TODO: ??
-  }
-
   login(userName, password) {
     return this._post("api/auth/token/obtain/", {
-      username: userName || "admin", //TODO - remove
-      password: password || "Aa123456" //TODO - remove
+      username: userName,
+      password: password
     }).then(res => {
       window.localStorage.setItem('jwt', res.access);
     });
   }
 
   register(user) {
-      return this._post("api/auth/token/obtain/", {
-          user: user
-      }).then(res => {
-          window.localStorage.setItem('jwt', res.access);
-  });
+      return this._post("user/create/", {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        first_name: user.firstName,
+        last_name: user.lastName,
+        gender: user.isFemale ? "F" : "M",
+        birth_date: user.birthDay,
+        relationship: user.isSingle ? "S" : "N"
+      });
   }
 
   addProduct(listId, productId, quantity) {
@@ -62,7 +65,7 @@ class ShoppingListApi {
   }
 
   getLists() {
-    return this._get("list/getall");
+    return this._get("list/getall/");
   }
 
   setCheckProduct(listProduct, isChecked) {
@@ -74,9 +77,9 @@ class ShoppingListApi {
   }
 
   updateListName(listId, listName) {
-    return this._post("list/update", {
-      list_id: listId,
-      list_name: listName
+    return this._post("list/update/", {
+      id: listId,
+      name: listName
     });
   }
 

@@ -54,7 +54,7 @@ class AddProduct extends Component {
 
   renderAutocompleteMenu(items) {
     if (this.state.matchingProducts.length === 0) {
-      return <div/>;
+      return <div className="hidden"/>;
     }
 
     return (<div className="autocomplete-menu" children={items}/>);
@@ -64,14 +64,7 @@ class AddProduct extends Component {
   onItemSelected(name, product) {
     const { shoppingListViewStore } = this.props;
     this.setState({searchValue: product.name, selectedProduct: product});
-    //shoppingListViewStore.addProduct(listId,product, amount);
   }
-
-    // onSelect(product) {
-    //     const { shoppingListViewStore } = this.props;
-    //     this.setState({searchValue: product.name, selectedProduct: getItemValue()});
-    //     //shoppingListViewStore.addProduct(listId,product, amount);
-    // }
 
   searchProducts(e) {
     const { shoppingListViewStore } = this.props;
@@ -83,7 +76,10 @@ class AddProduct extends Component {
 
   addProduct() {
     if (this.state.selectedProduct) {
-      this.props.shoppingListViewStore.addProduct(this.state.selectedProduct);
+      this.props.shoppingListViewStore.addProduct(this.state.selectedProduct)
+        .then(() => {
+          this.setState({ searchValue: "", selectedProduct: null, matchingProducts: [] });
+        });
     }
   }
 }

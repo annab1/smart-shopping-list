@@ -10,18 +10,17 @@ class UserViewStore {
   }
 
   login(userName, password) {
-    return this._api.login(userName, password);
-  }
-
-  register(firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount) {
-    let user  = new User({ firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount });
-    return this._api.register(user).then(action(() => {
-       this.currentUser = user;
+    return this._api.login(userName, password).then(action((user) => {
+      this.currentUser = new User(user);
     }));
   }
 
-  authenticate() {
-    return this._api.authenticate();
+  register(username,firstName, lastName, email, password, birthDay, isFemale, isSingle) {
+    const userData = { username, firstName, lastName, email, password, birthDay, isFemale, isSingle };
+    return this._api.register(userData).then(action(() => {
+      let user  = new User(userData);
+      this.currentUser = user;
+    }));
   }
 }
 

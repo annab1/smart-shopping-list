@@ -1,9 +1,20 @@
 @import "../variables";
 
+.shopping-list-page {
+  .content-header {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+}
+
 .header {
   display: flex;
   border-bottom: 1px solid silver;
   padding: 5px 15px;
+  flex-shrink: 0;
 
   .checkbox {
     width: 42px;
@@ -37,11 +48,13 @@
   padding: 3px 5px;
   display: flex;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 
   &:hover {
-    border: 1px solid black;
+    border: 1px solid $text-color;
     border-radius: 3px;
-
     .fa {
       visibility: visible;
     }
@@ -52,6 +65,7 @@
     font-size: 18px;
     visibility: hidden;
     align-self: center;
+    color: $text-color;
   }
 
 }

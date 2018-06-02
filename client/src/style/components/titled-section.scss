@@ -1,0 +1,11 @@
+@import "../variables";
+
+.titled-section {
+  .titled-section-title {
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-bottom: 3px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+}

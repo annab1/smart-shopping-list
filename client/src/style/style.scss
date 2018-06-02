@@ -1,116 +1,124 @@
-@import "reset";
-@import "layout";
-@import "variables";
-@import "pages/login";
-@import "pages/lists";
-@import "pages/shopping-list";
-@import "pages/registration";
-@import "components/spinner";
-@import "components/shopping-list-tile";
-@import "components/shopping-list-item";
-@import "components/add-product";
-@import "components/back-button";
-@import "fontawesome-all.min.css";
+  @import "reset";
+  @import "layout";
+  @import "variables";
+  @import "pages/login";
+  @import "pages/lists";
+  @import "pages/shopping-list";
+  @import "pages/registration";
+  @import "components/titled-section";
+  @import "components/spinner";
+  @import "components/shopping-list-tile";
+  @import "components/shopping-list-item";
+  @import "components/add-product";
+  @import "components/back-button";
+  @import "fontawesome-all.min.css";
 
-body {
-  font-family: 'Open Sans', sans-serif;
-  color: $text-color;
-  font-size: 16px;
-}
-
-button {
-  border-style: solid;
-}
-
-strong {
-  font-weight: bold;
-}
-
-input[type="text"], input[type="password"], input[role="combobox"], input[type="email"] {
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
-  font-size: 16px;
-  height: 37px;
-  padding-left: 10px;
-  padding-right: 10px;
-  box-sizing: border-box;
-  outline: none;
-}
-
-.title {
-  height: 70px;
-  background-color: #f1ebeb;
-  font-size: 25px;
-  line-height: 30px;
-  margin-bottom: 15px;
-  color: #737171;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-}
-
-.btn {
-  cursor: pointer;
-  color: $text-color;
-}
-
-.action-btn {
-  background-color: #ffffff;
-  border-color: $layout-main-color;
-  border-radius: $border-radius;
-  color: $layout-main-color;
-  font-size: 18px;
-  height: 37px;
-  flex-shrink: 0;
-
-  &:hover {
-    color: #ffffff;
-    background-color: $layout-main-color;
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: $text-color;
+    font-size: 16px;
   }
-}
 
-.link-btn {
-  border: none;
-  font-size: 16px;
-  color: $layout-main-color;
-}
+  button {
+    border-style: solid;
+  }
 
-.icon-btn {
-  border: none;
-  cursor: pointer;
-  line-height: 24px;
-  font-size: 16px;
-  background: transparent;
-  outline: none;
+  strong {
+    font-weight: bold;
+  }
 
-  &:hover {
+  input[type="text"], input[type="password"], input[role="combobox"], input[type="email"], input[type="date"] {
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    font-size: 16px;
+    height: 37px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .title {
+    font-size: 22px;
+    line-height: 30px;
+    margin-top: 25px;
+    color: $title-color;
+    display: flex;
+    font-weight: bold;
+    flex-shrink: 0;
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  .btn {
+    cursor: pointer;
+    color: $text-color;
+  }
+
+  .action-btn {
+    background-color: #ffffff;
+    border-color: $layout-main-color;
+    border-radius: $border-radius;
+    color: $layout-main-color;
+    font-size: 18px;
+    height: 37px;
+    flex-shrink: 0;
+
+    &:hover {
+      color: #ffffff;
+      background-color: $layout-main-color;
+    }
+  }
+
+  .link-btn {
+    border: none;
+    font-size: 16px;
     color: $layout-main-color;
   }
-}
 
+  .icon-btn {
+    border: none;
+    cursor: pointer;
+    line-height: 24px;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
 
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.table-list {
-  display: table;
-
-  li {
-    display: table-row;
+    &:hover {
+      color: $layout-main-color;
+    }
   }
 
-  .table-list-item-name {
-    display: table-cell;
-    padding-right: 5px;
-    text-overflow: ellipsis;
-    max-width: 100px;
-    overflow: hidden;
-  }
-}
 
-.small-text {
-  font-size: $small-font-size;
-}
+  .flex-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-list {
+    display: table;
+
+    li {
+      display: table-row;
+    }
+
+    .table-list-item-name {
+      display: table-cell;
+      padding-right: 5px;
+      text-overflow: ellipsis;
+      max-width: 100px;
+      overflow: hidden;
+    }
+  }
+
+  .small-text {
+    font-size: $small-font-size;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .err-label {
+    color: red;
+  }

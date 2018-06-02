@@ -1,37 +1,45 @@
-from django.http import JsonResponse, HttpResponse
-import pandas as pd
 import json
 import datetime
 import time
 from shopping.models import Category, Product, ShoppingList, ProductInstances
 from shopping.serializers import CategorySerializer, ProductSerializer, \
-    ProductInstancesSerializer, ShoppingListSerializer
+    ProductInstancesSerializer, ShoppingListSerializer, UserDataSerializer
 from shopping.predictions import predict_single_product
-from django.contrib.auth.models import User
 import pandas as pd
 
 from models import UserData, ProductInstances, ShoppingList
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 @csrf_exempt
 @csrf_exempt
 @csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
 def get_categories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
 def get_products(request):
     prefix_filter = request.GET["prefix"]
     products = Product.objects.all().filter(name__icontains=prefix_filter)
     serializer = ProductSerializer(products, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['POST'])
+@login_required(login_url="/denied/")
 def add_product(request):
     params = json.loads(request.body)
 
@@ -50,18 +58,18 @@ def add_product(request):
     else:
         instances[0].amount += quantity
         instances[0].save()
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['POST'])
+@login_required(login_url="/denied/")
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
-    # TODO: request.user.id
-
-    user = User.objects.get(id=1)
-    ShoppingList.objects.create(name=name, user=user, date=datetime.now())
-    return HttpResponse('')
+    ShoppingList.objects.create(name=name, user=request.user,
+                                date=datetime.now())
+    return Response(status=status.HTTP_200_OK)
 
 
 # The following code adds some products to the list for test purposes. IT SHOULD BE DELETED
@@ -84,71 +92,79 @@ def add_some_prodcuts_to_list(id):
 
 
 @csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
-    # TODO: request.user.id
-    user = User.objects.get(id=1)
-    list_instance = ShoppingList.objects.create(name=name, user=user,
+    list_instance = ShoppingList.objects.create(name=name, user=request.user,
                                                 date=pd.datetime.now())
     products = Product.objects.all()
-    # TODO: request.user.id
-
     for product in products:
-        amount = round(predict_single_product(1, product.id))
+        amount = round(predict_single_product(request.user.id, product.id))
         if amount:
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
     serializer = ShoppingListSerializer(list_instance)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['POST'])
+@login_required(login_url="/denied/")
 def update_list(request):
     params = json.loads(request.body)
     shopping_list = ShoppingList.objects.get(id=params['id'])
     shopping_list.name = params['name']
     shopping_list.save()
 
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['POST'])
+@login_required(login_url="/denied/")
 def remove_product(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
     product_id = params["product_id"]
     instance = \
         ProductInstances.objects.filter(shopping_list_id=list_id,
-                                           product_id=product_id).delete()
-    return HttpResponse('')
+                                        product_id=product_id).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
 def get_shopping_list(request):
     list_id = request.GET["list_id"]
     list_instance = ShoppingList.objects.get(id=list_id)
     serializer = ShoppingListSerializer(list_instance)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
 def get_shopping_lists(request):
-    # TODO: request.user.id
-    user = User.objects.get(id=1)
-    list_instances = ShoppingList.objects.filter(user=user)
+    list_instances = ShoppingList.objects.filter(user=request.user)
     serializer = ShoppingListSerializer(list_instances, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
 def get_product_by_id(request):
     prod_id = request.GET["id"]
     product = Product.objects.all().filter(id=prod_id)[0]
     serializer = ProductSerializer(product)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['POST'])
+@login_required(login_url="/denied/")
 def update_product_is_checked_val(request):
     params = json.loads(request.body)
     product_id = params["product_id"]
@@ -161,10 +177,12 @@ def update_product_is_checked_val(request):
     else:
         product_instance.is_checked = is_checked
         product_instance.save()
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['POST'])
+@login_required(login_url="/denied/")
 def update_list_is_archived_val(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
@@ -175,4 +193,42 @@ def update_list_is_archived_val(request):
     else:
         list_instance.is_archived = is_checked
         list_instance.save()
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(['POST'])
+def create_user(request):
+    params = json.loads(request.body)
+    username = params["username"]
+    first_name = params["first_name"]
+    last_name = params["last_name"]
+    password = params["password"]
+    email = params["email"]
+    birth_date = params["birth_date"]
+    gender = params["gender"]
+    relationship = params["relationship"]
+
+    parsed_date = datetime.datetime.strptime(birth_date, "%Y-%M-%d")
+    user = User.objects.create_user(username=username, first_name=first_name,
+                                    last_name=last_name, password=password,
+                                    email=email)
+    user_data = UserData(user=user, gender=gender, relationship=relationship,
+                         birth_date=parsed_date)
+    user_data.save()
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@csrf_exempt
+def permission_denied(request):
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
+def get_user_details(request):
+    user_data = UserData.objects.get(user=request.user)
+    serializer = UserDataSerializer(user_data)
+    return Response(serializer.data)

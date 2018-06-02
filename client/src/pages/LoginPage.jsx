@@ -10,24 +10,27 @@ class LoginPage extends Component {
     super(props);
 
     this.signup = this.signup.bind(this);
-    this.state = {};
+    this.setPassword = this.setPassword.bind(this);
+    this.setUserName = this.setUserName.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+    this.state = { userName: "", password: ""};
   }
 
   render() {
     return (
       <div className="content-panel small login-page">
-        <h1 className="title">Login to your account</h1>
         <section className="padded-section">
           <img className="logo" src={require("../images/logo.png")} />
+          <h1 className="title">Login to your account</h1>
           <form className="login-form">
-            <input type="text" placeholder="User name" value={this.userName}/>
-            <input type="password" placeholder="Password" value={this.password}/>
+            <input type="text" placeholder="User name" value={this.state.userName} onChange={this.setUserName}/>
+            <input type="password" placeholder="Password" value={this.state.password} onKeyUp={this.onKeyUp} onChange={this.setPassword}/>
             <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
           </form>
           {this.state.errMessage &&
-            <label className="err-label">
-              {this.state.errMessage}
-             </label>
+          <label className="err-label">
+            {this.state.errMessage}
+          </label>
           }
           <label> Don't have an account yet?
             <button className="btn link-btn"
@@ -40,19 +43,36 @@ class LoginPage extends Component {
     );
   }
 
+  setUserName(e) {
+    this.setState({ userName: e.target.value });
+  }
+
+  setPassword(e) {
+    this.setState({ password: e.target.value });
+  }
+
   @action.bound
   onSubmit() {
     const { userViewStore, shoppingListViewStore } = this.props;
-    userViewStore.login(this.userName, this.password).then(() => {
-      shoppingListViewStore.setCurrentPage(Pages.ListsPage);
-    }).catch(err => {
+    userViewStore.login(this.state.userName, this.state.password)
+      .then(() => {
+        shoppingListViewStore.setCurrentPage(Pages.ListsPage);
+      }).catch(err => {
       this.setState({ errMessage: err.toString() });
     });
+  }
+
+  onKeyUp(event) {
+    if (event.keyCode === 13) {
+      this.onSubmit();
+    }
   }
 
   signup() {
     this.props.shoppingListViewStore.setCurrentPage(Pages.Register);
   }
 }
+
+
 
 export default LoginPage;

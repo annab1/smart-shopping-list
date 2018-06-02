@@ -7,7 +7,7 @@ import ListProduct from "../models/ListProduct";
 
 class ShoppingListViewStore {
   @observable currentPage;
-  @observable lists = [];
+  @observable lists;
   @observable currentShoppingList = null;
 
   constructor() {
@@ -28,6 +28,10 @@ class ShoppingListViewStore {
     }));
   }
 
+  addProductAmount(product, amount) {
+    return this._api.addProduct(this.currentShoppingList.id, product.id, amount);
+  }
+
   removeProduct(listProduct) {
     return this._api.removeProduct(this.currentShoppingList.id, listProduct.product.id, listProduct.amount)
       .then(action(() => {
@@ -44,6 +48,7 @@ class ShoppingListViewStore {
   generateList() {
     return this._api.generateList().then(action(generatedList => {
       this.currentShoppingList = ShoppingList.parse(generatedList);
+      this.lists.push(this.currentShoppingList);
     }));
   }
 
