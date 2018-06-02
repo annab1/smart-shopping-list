@@ -13,10 +13,11 @@ class UserViewStore {
     return this._api.login(userName, password);
   }
 
-  register(firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount) {
-    let user  = new User({ firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount });
-    return this._api.register(user).then(action(() => {
-       this.currentUser = user;
+  register(firstName, lastName, email, password, birthDay, isFemale, isSingle) {
+    const userData = { firstName, lastName, email, password, birthDay, isFemale, isSingle };
+    return this._api.register(userData).then(action(() => {
+      let user  = new User(userData);
+      this.currentUser = user;
     }));
   }
 }

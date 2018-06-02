@@ -48,6 +48,7 @@ class ShoppingListViewStore {
   generateList() {
     return this._api.generateList().then(action(generatedList => {
       this.currentShoppingList = ShoppingList.parse(generatedList);
+      this.lists.push(this.currentShoppingList);
     }));
   }
 

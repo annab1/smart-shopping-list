@@ -31,12 +31,10 @@ class ShoppingListApi {
         password: user.password,
         first_name: user.firstName,
         last_name: user.lastName,
-        gender: user.gender,
+        gender: user.isFemale ? "F" : "M",
         birth_date: user.birthDate,
-        relationship: user.relationship
-      }).then(res => {
-          window.localStorage.setItem('jwt', res.access);
-  });
+        relationship: user.isSingle ? "S" : "N"
+      });
   }
 
   addProduct(listId, productId, quantity) {
