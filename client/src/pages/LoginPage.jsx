@@ -10,7 +10,9 @@ class LoginPage extends Component {
     super(props);
 
     this.signup = this.signup.bind(this);
-    this.state = {};
+    this.setPassword = this.setPassword.bind(this);
+    this.setUserName = this.setUserName.bind(this);
+    this.state = { userName: "", password: ""};
   }
 
   render() {
@@ -20,8 +22,8 @@ class LoginPage extends Component {
         <section className="padded-section">
           <img className="logo" src={require("../images/logo.png")} />
           <form className="login-form">
-            <input type="text" placeholder="User name" value={this.userName}/>
-            <input type="password" placeholder="Password" value={this.password}/>
+            <input type="text" placeholder="User name" value={this.state.userName} onChange={this.setUserName}/>
+            <input type="password" placeholder="Password" value={this.state.password} onChange={this.setPassword}/>
             <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
           </form>
           {this.state.errMessage &&
@@ -40,10 +42,18 @@ class LoginPage extends Component {
     );
   }
 
+  setUserName(e) {
+    this.setState({ userName: e.target.value });
+  }
+
+  setPassword(e) {
+    this.setState({ password: e.target.value });
+  }
+
   @action.bound
   onSubmit() {
     const { userViewStore, shoppingListViewStore } = this.props;
-    userViewStore.login(this.userName, this.password)
+    userViewStore.login(this.state.userName, this.state.password)
       .then(() => {
         shoppingListViewStore.setCurrentPage(Pages.ListsPage);
       }).catch(err => {
