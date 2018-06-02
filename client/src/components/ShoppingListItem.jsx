@@ -68,6 +68,9 @@ class ShoppingListItem extends Component {
   removeProduct() {
     this.props.shoppingListViewStore.removeProduct(this.props.listProduct);
   }
+
+
+
 }
 
 export default ShoppingListItem;
