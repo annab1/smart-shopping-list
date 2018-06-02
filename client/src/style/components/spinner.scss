@@ -1,3 +1,9 @@
+#wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
 .loader,
 .loader:after {
   border-radius: 50%;
@@ -5,7 +11,7 @@
   height: 10em;
 }
 .loader {
-  margin: 60px auto;
+  margin: auto;
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
@@ -18,6 +24,8 @@
   transform: translateZ(0);
   -webkit-animation: load8 1.1s infinite linear;
   animation: load8 1.1s infinite linear;
+  top: 50%;
+
 }
 @-webkit-keyframes load8 {
   0% {

@@ -115,3 +115,7 @@ input[type="text"], input[type="password"], input[role="combobox"], input[type="
 .small-text {
   font-size: $small-font-size;
 }
+
+.hidden {
+  display: none;
+}

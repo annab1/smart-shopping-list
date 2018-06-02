@@ -17,16 +17,23 @@ class ShoppingListApi {
 
   login(userName, password) {
     return this._post("api/auth/token/obtain/", {
-      username: userName || "admin", //TODO - remove
-      password: password || "Aa123456" //TODO - remove
+      username: userName,
+      password: password
     }).then(res => {
       window.localStorage.setItem('jwt', res.access);
     });
   }
 
   register(user) {
-      return this._post("api/auth/token/obtain/", {
-          user: user
+      return this._post("user/create/", {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        first_name: user.firstName,
+        last_name: user.lastName,
+        gender: user.gender,
+        birth_date: user.birthDate,
+        relationship: user.relationship
       }).then(res => {
           window.localStorage.setItem('jwt', res.access);
   });

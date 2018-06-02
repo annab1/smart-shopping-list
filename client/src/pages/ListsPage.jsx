@@ -3,6 +3,7 @@ import { observer, inject } from "mobx-react";
 import { action } from "mobx";
 import Pages from "../constants/Pages";
 import ShoppingListTile from "../components/ShoppingListTile";
+import Spinner from "../components/Spinner";
 
 @inject("shoppingListViewStore")
 @observer
@@ -22,6 +23,10 @@ class ListsPage extends Component {
 
   render() {
     const { shoppingListViewStore } = this.props;
+
+    if (!shoppingListViewStore.lists) {
+      return <Spinner/>;
+    }
 
     return (
       <div className="content-panel">
