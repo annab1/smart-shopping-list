@@ -30,7 +30,7 @@ class ProductInstancesSerializer(serializers.ModelSerializer):
 class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingList
-        fields = ("id", "name", "date", "products")
+        fields = ("id", "name", "is_archived", "date", "products")
 
     products = ProductInstancesSerializer(many=True)
 
