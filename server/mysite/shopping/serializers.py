@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from shopping.models import Category, Product, ProductInstances, ShoppingList
+from shopping.models import Category, Product, ProductInstances, ShoppingList, \
+    UserData
+from django.contrib.auth.models import User
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -31,3 +33,17 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "date", "products")
 
     products = ProductInstancesSerializer(many=True)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ("password",)
+
+
+class UserDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserData
+        fields = '__all__'
+
+    user = UserSerializer()
