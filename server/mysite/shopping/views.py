@@ -209,14 +209,13 @@ def create_user(request):
     gender = params["gender"]
     relationship = params["relationship"]
 
+    parsed_date = datetime.strptime(birth_date, "%Y-%M-%d")
     user = User.objects.create_user(username=username, first_name=first_name,
                                     last_name=last_name, password=password,
                                     email=email)
     user_data = UserData(user=user, gender=gender, relationship=relationship,
-                         birth_date=datetime.datetime.fromtimestamp(
-                             int(birth_date)))
+                         birth_date=parsed_date)
     user_data.save()
-
     return Response(status=status.HTTP_200_OK)
 
 
