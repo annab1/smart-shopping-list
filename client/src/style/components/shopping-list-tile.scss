@@ -8,6 +8,7 @@
   padding: 10px;
   margin: 5px;
   background: white;
+  overflow: hidden;
 
   > * {
     margin-bottom: 10px;
@@ -15,6 +16,7 @@
     overflow: hidden;
     max-width: 100%;
     text-overflow: ellipsis;
+    flex-shrink: 0;
   }
 
   &:hover {

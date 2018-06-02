@@ -13,8 +13,8 @@ class UserViewStore {
     return this._api.login(userName, password);
   }
 
-  register(firstName, lastName, email, password, birthDay, isFemale, isSingle) {
-    const userData = { firstName, lastName, email, password, birthDay, isFemale, isSingle };
+  register(username,firstName, lastName, email, password, birthDay, isFemale, isSingle) {
+    const userData = { username, firstName, lastName, email, password, birthDay, isFemale, isSingle };
     return this._api.register(userData).then(action(() => {
       let user  = new User(userData);
       this.currentUser = user;
