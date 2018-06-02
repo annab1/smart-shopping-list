@@ -25,7 +25,7 @@ class LoginPage extends Component {
           <form className="login-form">
             <input type="text" placeholder="User name" value={this.state.userName} onChange={this.setUserName}/>
             <input type="password" placeholder="Password" value={this.state.password} onKeyUp={this.onKeyUp} onChange={this.setPassword}/>
-            <button type="button" className="btn action-btn" id="submitBtn" onClick={this.onSubmit}>Submit</button>
+            <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
           </form>
           {this.state.errMessage &&
           <label className="err-label">

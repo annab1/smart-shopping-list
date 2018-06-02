@@ -72,7 +72,7 @@ class RegistrationPage extends Component {
       <div className="content-panel register-page">
         <BackButton page={Pages.Login} />
         <h1 className="title">Registration</h1>
-        <form className="register-form padded-section">
+        <div className="register-form padded-section">
           <TitledSection title="User name">
             <input type="text" value={username} placeholder="User name" onChange={this.userNameChanged} />
           </TitledSection>
@@ -141,7 +141,7 @@ class RegistrationPage extends Component {
           </label>
           }
           <button className="btn action-btn" onClick={this.register}>Register</button>
-        </form>
+        </div>
       </div>
     );
   }
