@@ -23,8 +23,8 @@ class LoginPage extends Component {
           <img className="logo" src={require("../images/logo.png")} />
           <form className="login-form">
             <input type="text" placeholder="User name" value={this.state.userName} onChange={this.setUserName}/>
-            <input type="password" placeholder="Password" value={this.state.password} onChange={this.setPassword}/>
-            <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
+            <input type="password" placeholder="Password" value={this.state.password} onKeyUp={this.onSubmitIfEnter} onChange={this.setPassword}/>
+            <button type="button" className="btn action-btn" id="submitBtn" onClick={this.onSubmit}>Submit</button>
           </form>
           {this.state.errMessage &&
           <label className="err-label">
@@ -61,9 +61,20 @@ class LoginPage extends Component {
     });
   }
 
+  @action.bound
+  onSubmitIfEnter(event) {
+        
+    if (event.keyCode === 13) {
+                document.getElementById("submitBtn").click();
+    }
+ 
+}
+
   signup() {
     this.props.shoppingListViewStore.setCurrentPage(Pages.Register);
   }
 }
 
+
+      
 export default LoginPage;
