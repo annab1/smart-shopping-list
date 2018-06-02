@@ -23,7 +23,7 @@ class ShoppingListPage extends Component {
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onTitleKeyUp = this.onTitleKeyUp.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.state = { editTitle: false, insertedName: null };
+    this.state = { editTitle: false, insertedName: null};
     this.closeList = this.closeList.bind(this);
 
   }
@@ -45,8 +45,10 @@ class ShoppingListPage extends Component {
         <BackButton page={Pages.ListsPage} />
         <div className="content-header">
           {this.renderTitle()}
+          <br/>
+            {this.props.shoppingListViewStore.currentShoppingList.isArchived ?
+                <i className="fa fa-clipboard-check closed-header">closed</i> : null}
         </div>
-
         <div className="header">
           <span className="checkbox" />
           <span className="product">Product</span>
@@ -61,8 +63,11 @@ class ShoppingListPage extends Component {
               </li>
           ) }
         </ul>
-        <AddProduct />
-          <button type="button" className="btn action-btn add-btn" onClick={this.closeList}>Close List</button>
+
+          {this.props.shoppingListViewStore.isArchived?
+              null : <AddProduct /> }
+          {this.props.shoppingListViewStore.isArchived ?
+          null : <button type="button" className="btn action-btn add-btn" onClick={this.closeList}>Close List</button> }
       </div>
     );
   }
@@ -76,6 +81,7 @@ class ShoppingListPage extends Component {
             {shoppingListViewStore.currentShoppingList.name}
           <span className="fa fa-pencil-alt" />
         </span>
+
       );
     }
 
