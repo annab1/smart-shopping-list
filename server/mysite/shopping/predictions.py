@@ -4,7 +4,7 @@ from statsmodels.tsa.arima_model import ARIMA
 from models import User, UserData, ProductInstances, ShoppingList
 
 
-MINIMUM_LISTS_FOR_USER = 2
+MINIMUM_LISTS_FOR_USER = 10
 
 
 def get_user_data_for_user(usr):
@@ -20,7 +20,7 @@ def get_similar_users(user_id):
     age_differences = [abs((get_user_data_for_user(x).birth_date - current_user_data.birth_date).total_seconds()) for x in all_users_but_current]
     min_age_diff = min(age_differences)
     max_age_diff = max(age_differences)
-    diff_range = max_age_diff - min_age_diff
+    diff_range = (max_age_diff - min_age_diff) if (max_age_diff - min_age_diff) else 1
     user_ranking = {}
     for user in all_users_but_current:
         user_data = get_user_data_for_user(user)
