@@ -12,6 +12,7 @@ class LoginPage extends Component {
     this.signup = this.signup.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setUserName = this.setUserName.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
     this.state = { userName: "", password: ""};
   }
 
@@ -23,7 +24,7 @@ class LoginPage extends Component {
           <img className="logo" src={require("../images/logo.png")} />
           <form className="login-form">
             <input type="text" placeholder="User name" value={this.state.userName} onChange={this.setUserName}/>
-            <input type="password" placeholder="Password" value={this.state.password} onKeyUp={this.onSubmitIfEnter} onChange={this.setPassword}/>
+            <input type="password" placeholder="Password" value={this.state.password} onKeyUp={this.onKeyUp} onChange={this.setPassword}/>
             <button type="button" className="btn action-btn" id="submitBtn" onClick={this.onSubmit}>Submit</button>
           </form>
           {this.state.errMessage &&
@@ -61,14 +62,11 @@ class LoginPage extends Component {
     });
   }
 
-  @action.bound
-  onSubmitIfEnter(event) {
-        
+  onKeyUp(event) {
     if (event.keyCode === 13) {
-                document.getElementById("submitBtn").click();
+      this.onSubmit();
     }
- 
-}
+  }
 
   signup() {
     this.props.shoppingListViewStore.setCurrentPage(Pages.Register);
@@ -76,5 +74,5 @@ class LoginPage extends Component {
 }
 
 
-      
+
 export default LoginPage;

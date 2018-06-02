@@ -10,7 +10,9 @@ class ShoppingListApi {
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${window.localStorage.getItem('jwt')}`;
+      if (config.url !== BASE_URL + "user/create/") {
+        config.headers.Authorization = `Bearer ${window.localStorage.getItem('jwt')}`;
+      }
       return config;
     });
   }
@@ -32,7 +34,7 @@ class ShoppingListApi {
         first_name: user.firstName,
         last_name: user.lastName,
         gender: user.isFemale ? "F" : "M",
-        birth_date: user.birthDate,
+        birth_date: user.birthDay,
         relationship: user.isSingle ? "S" : "N"
       });
   }

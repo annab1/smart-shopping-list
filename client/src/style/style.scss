@@ -5,6 +5,7 @@
 @import "pages/lists";
 @import "pages/shopping-list";
 @import "pages/registration";
+@import "components/titled-section";
 @import "components/spinner";
 @import "components/shopping-list-tile";
 @import "components/shopping-list-item";
@@ -26,7 +27,7 @@ strong {
   font-weight: bold;
 }
 
-input[type="text"], input[type="password"], input[role="combobox"], input[type="email"] {
+input[type="text"], input[type="password"], input[role="combobox"], input[type="email"], input[type="date"] {
   border: 1px solid $border-color;
   border-radius: $border-radius;
   font-size: 16px;
@@ -49,6 +50,7 @@ input[type="text"], input[type="password"], input[role="combobox"], input[type="
   align-items: center;
   font-weight: bold;
   padding: 0 50px;
+  flex-shrink: 0;
 }
 
 .btn {
