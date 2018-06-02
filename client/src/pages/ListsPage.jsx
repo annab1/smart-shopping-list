@@ -39,6 +39,9 @@ class ListsPage extends Component {
           </h1>
           }
           <div className="shopping-lists">
+            {shoppingListViewStore.lists.length === 0 &&
+            <h1 className="title">You don't have any lists yet.<br/> Start by clicking the "Generate new list" button below.</h1>
+            }
             {shoppingListViewStore.lists.map(list =>
               <ShoppingListTile key={list.id}
                                 list={list}
