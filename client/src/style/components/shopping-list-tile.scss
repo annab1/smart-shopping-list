@@ -11,6 +11,10 @@
 
   > * {
     margin-bottom: 10px;
+    line-height: 20px;
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
   }
 
   &:hover {

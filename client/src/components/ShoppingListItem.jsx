@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import DeleteButton from "./DeleteButton";
 import {inject, observer} from "mobx-react";
 import { action } from "mobx";
-import classnames from "classnames";
+import classNames from "classnames";
 
 @inject("shoppingListViewStore")
 @observer
@@ -20,10 +20,11 @@ class ShoppingListItem extends Component {
     const {listProduct} = this.props;
 
     return (
-      <div className={classnames("shopping-list-item", {"checked": listProduct.isChecked})}>
+      <div className={classNames("shopping-list-item", {"checked": listProduct.isChecked})}>
         <span className="checkbox">
           <input type="checkbox"
                  id={listProduct.product.name + "checkbox"}
+                 checked={listProduct.isChecked}
                  value={listProduct.isChecked}
                  onChange={ this.onCheck } />
           <label htmlFor={listProduct.product.name + "checkbox"} />
@@ -51,18 +52,22 @@ class ShoppingListItem extends Component {
   }
 
   onMinusClicked() {
-    if (this.props.listProduct.amount > 0) {
-      this.setAmount(this.props.listProduct.amount - 1);
+    if (this.props.listProduct.amount > 1) {
+      this.setAmount(-1);
     }
   }
 
   onPlusClicked() {
-    this.setAmount(this.props.listProduct.amount + 1);
+    this.setAmount(1);
   }
 
   @action
   setAmount(amount) {
-    this.props.listProduct.amount = amount;
+    const { shoppingListViewStore, listProduct } = this.props;
+    shoppingListViewStore.addProductAmount(listProduct.product, amount)
+      .then(action(() => {
+        listProduct.amount += amount;
+      }));
   }
 
   removeProduct() {

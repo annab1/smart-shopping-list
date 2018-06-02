@@ -25,9 +25,9 @@ class LoginPage extends Component {
             <button type="button" className="btn action-btn" onClick={this.onSubmit}>Submit</button>
           </form>
           {this.state.errMessage &&
-            <label className="err-label">
-              {this.state.errMessage}
-             </label>
+          <label className="err-label">
+            {this.state.errMessage}
+          </label>
           }
           <label> Don't have an account yet?
             <button className="btn link-btn"
@@ -43,9 +43,10 @@ class LoginPage extends Component {
   @action.bound
   onSubmit() {
     const { userViewStore, shoppingListViewStore } = this.props;
-    userViewStore.login(this.userName, this.password).then(() => {
-      shoppingListViewStore.setCurrentPage(Pages.ListsPage);
-    }).catch(err => {
+    userViewStore.login(this.userName, this.password)
+      .then(() => {
+        shoppingListViewStore.setCurrentPage(Pages.ListsPage);
+      }).catch(err => {
       this.setState({ errMessage: err.toString() });
     });
   }
