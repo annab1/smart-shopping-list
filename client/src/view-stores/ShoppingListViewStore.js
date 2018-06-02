@@ -28,6 +28,10 @@ class ShoppingListViewStore {
     }));
   }
 
+  addProductAmount(product, amount) {
+    return this._api.addProduct(this.currentShoppingList.id, product.id, amount);
+  }
+
   removeProduct(listProduct) {
     return this._api.removeProduct(this.currentShoppingList.id, listProduct.product.id, listProduct.amount)
       .then(action(() => {

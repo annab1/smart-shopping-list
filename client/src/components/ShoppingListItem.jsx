@@ -52,18 +52,22 @@ class ShoppingListItem extends Component {
   }
 
   onMinusClicked() {
-    if (this.props.listProduct.amount > 0) {
-      this.setAmount(this.props.listProduct.amount - 1);
+    if (this.props.listProduct.amount > 1) {
+      this.setAmount(-1);
     }
   }
 
   onPlusClicked() {
-    this.setAmount(this.props.listProduct.amount + 1);
+    this.setAmount(1);
   }
 
   @action
   setAmount(amount) {
-    this.props.listProduct.amount = amount;
+    const { shoppingListViewStore, listProduct } = this.props;
+    shoppingListViewStore.addProductAmount(listProduct.product, amount)
+      .then(action(() => {
+        listProduct.amount += amount;
+      }));
   }
 
   removeProduct() {
