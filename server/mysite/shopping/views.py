@@ -1,5 +1,3 @@
-from django.http import JsonResponse, HttpResponse
-import pandas as pd
 import json
 import datetime
 import time
@@ -15,6 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 @csrf_exempt
@@ -68,7 +67,8 @@ def add_product(request):
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
-    ShoppingList.objects.create(name=name, user=request.user, date=datetime.now())
+    ShoppingList.objects.create(name=name, user=request.user,
+                                date=datetime.now())
     return Response(status=status.HTTP_200_OK)
 
 
@@ -194,6 +194,31 @@ def update_list_is_archived_val(request):
         list_instance.is_archived = is_checked.lower() == 'true'
         list_instance.save()
     return Response(status=status.HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(['POST'])
+def create_user(request):
+    params = json.loads(request.body)
+    username = params["username"]
+    first_name = params["first_name"]
+    last_name = params["last_name"]
+    password = params["password"]
+    email = params["email"]
+    birth_date = params["birth_date"]
+    gender = params["gender"]
+    relationship = params["relationship"]
+
+    user = User.objects.create_user(username=username, first_name=first_name,
+                                    last_name=last_name, password=password,
+                                    email=email)
+    user_data = UserData(user=user, gender=gender, relationship=relationship,
+                         birth_date=datetime.datetime.fromtimestamp(
+                             int(birth_date)))
+    user_data.save()
+
+    return Response(status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @csrf_exempt
