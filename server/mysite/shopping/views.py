@@ -15,12 +15,14 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.decorators import login_required
 
 
 @csrf_exempt
 @csrf_exempt
 @csrf_exempt
 @api_view(['GET'])
+@login_required
 def get_categories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
@@ -29,6 +31,7 @@ def get_categories(request):
 
 @csrf_exempt
 @api_view(['GET'])
+@login_required
 def get_products(request):
     prefix_filter = request.GET["prefix"]
     products = Product.objects.all().filter(name__icontains=prefix_filter)
@@ -38,6 +41,7 @@ def get_products(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@login_required
 def add_product(request):
     params = json.loads(request.body)
 
@@ -61,6 +65,7 @@ def add_product(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@login_required
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
@@ -92,6 +97,7 @@ def add_some_prodcuts_to_list(id):
 
 @csrf_exempt
 @api_view(['GET'])
+@login_required
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     # TODO: request.user.id
@@ -112,6 +118,7 @@ def generate_list(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@login_required
 def update_list(request):
     params = json.loads(request.body)
     shopping_list = ShoppingList.objects.get(id=params['id'])
@@ -123,6 +130,7 @@ def update_list(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@login_required
 def remove_product(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
@@ -135,6 +143,7 @@ def remove_product(request):
 
 @csrf_exempt
 @api_view(['GET'])
+@login_required
 def get_shopping_list(request):
     list_id = request.GET["list_id"]
     list_instance = ShoppingList.objects.get(id=list_id)
@@ -144,6 +153,7 @@ def get_shopping_list(request):
 
 @csrf_exempt
 @api_view(['GET'])
+@login_required
 def get_shopping_lists(request):
     # TODO: request.user.id
     user = User.objects.get(id=1)
@@ -154,6 +164,7 @@ def get_shopping_lists(request):
 
 @csrf_exempt
 @api_view(['GET'])
+@login_required
 def get_product_by_id(request):
     prod_id = request.GET["id"]
     product = Product.objects.all().filter(id=prod_id)[0]
@@ -163,6 +174,7 @@ def get_product_by_id(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@login_required
 def update_product_is_checked_val(request):
     params = json.loads(request.body)
     product_id = params["product_id"]
@@ -180,6 +192,7 @@ def update_product_is_checked_val(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@login_required
 def update_list_is_archived_val(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
