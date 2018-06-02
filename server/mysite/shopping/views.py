@@ -208,18 +208,14 @@ def create_user(request):
     birth_date = params["birth_date"]
     gender = params["gender"]
     relationship = params["relationship"]
-    try:
-        parsed_date = datetime.strptime(birth_date, "%Y-%M-%d")
-        user = User.objects.create_user(username=username, first_name=first_name,
-                                        last_name=last_name, password=password,
-                                        email=email)
-        user_data = UserData(user=user, gender=gender, relationship=relationship,
-                             birth_date=parsed_date)
-        user_data.save()
-    except Exception as e:
-        print e.message
-        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    parsed_date = datetime.datetime.strptime(birth_date, "%Y-%M-%d")
+    user = User.objects.create_user(username=username, first_name=first_name,
+                                    last_name=last_name, password=password,
+                                    email=email)
+    user_data = UserData(user=user, gender=gender, relationship=relationship,
+                         birth_date=parsed_date)
+    user_data.save()
     return Response(status=status.HTTP_200_OK)
 
 
