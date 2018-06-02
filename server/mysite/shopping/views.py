@@ -7,7 +7,6 @@ from shopping.models import Category, Product, ShoppingList, ProductInstances
 from shopping.serializers import CategorySerializer, ProductSerializer, \
     ProductInstancesSerializer, ShoppingListSerializer
 from shopping.predictions import predict_single_product
-from django.contrib.auth.models import User
 import pandas as pd
 
 from models import UserData, ProductInstances, ShoppingList
@@ -69,10 +68,7 @@ def add_product(request):
 def create_list(request):
     params = json.loads(request.body)
     name = params['name']
-    # TODO: request.user.id
-
-    user = User.objects.get(id=1)
-    ShoppingList.objects.create(name=name, user=user, date=datetime.now())
+    ShoppingList.objects.create(name=name, user=request.user, date=datetime.now())
     return Response(status=status.HTTP_200_OK)
 
 
@@ -100,15 +96,11 @@ def add_some_prodcuts_to_list(id):
 @login_required(login_url="/denied/")
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
-    # TODO: request.user.id
-    user = User.objects.get(id=1)
-    list_instance = ShoppingList.objects.create(name=name, user=user,
+    list_instance = ShoppingList.objects.create(name=name, user=request.user,
                                                 date=pd.datetime.now())
     products = Product.objects.all()
-    # TODO: request.user.id
-
     for product in products:
-        amount = round(predict_single_product(1, product.id))
+        amount = round(predict_single_product(request.user.id, product.id))
         if amount:
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
@@ -155,9 +147,7 @@ def get_shopping_list(request):
 @api_view(['GET'])
 @login_required(login_url="/denied/")
 def get_shopping_lists(request):
-    # TODO: request.user.id
-    user = User.objects.get(id=1)
-    list_instances = ShoppingList.objects.filter(user=user)
+    list_instances = ShoppingList.objects.filter(user=request.user)
     serializer = ShoppingListSerializer(list_instances, many=True)
     return Response(serializer.data)
 
