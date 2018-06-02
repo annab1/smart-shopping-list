@@ -24,7 +24,7 @@ class ShoppingList(models.Model):
     date = models.DateTimeField('date')
     user = models.ForeignKey(User)
     is_archived = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return self.name
 
@@ -41,7 +41,7 @@ class ProductInstances(models.Model):
                                                           self.shopping_list)
 
 
-class  UserData(models.Model):
+class UserData(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateTimeField('date of birth')
     gender = models.CharField(max_length=2, choices=(("M", "Male"),

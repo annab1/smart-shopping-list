@@ -27,7 +27,7 @@ from shopping.views import (get_categories, get_products, create_list,
                             get_product_by_id, generate_list,
                             update_product_is_checked_val,
                             update_list_is_archived_val,
-                            permission_denied, create_user)
+                            permission_denied, create_user, get_user_details)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^get/categories/', get_categories),
     url(r'^get/products/', get_products),
     url(r'^get/product/', get_product_by_id),
+    url(r'^get/userdata/', get_user_details),
     url(r'^list/add/', add_product),
     url(r'^list/remove/', remove_product),
     url(r'^list/create/', create_list),

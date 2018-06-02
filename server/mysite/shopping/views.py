@@ -3,7 +3,7 @@ import datetime
 import time
 from shopping.models import Category, Product, ShoppingList, ProductInstances
 from shopping.serializers import CategorySerializer, ProductSerializer, \
-    ProductInstancesSerializer, ShoppingListSerializer
+    ProductInstancesSerializer, ShoppingListSerializer, UserDataSerializer
 from shopping.predictions import predict_single_product
 import pandas as pd
 
@@ -223,3 +223,12 @@ def create_user(request):
 @csrf_exempt
 def permission_denied(request):
     return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@login_required(login_url="/denied/")
+def get_user_details(request):
+    user_data = UserData.objects.get(user=request.user)
+    serializer = UserDataSerializer(user_data)
+    return Response(serializer.data)
