@@ -10,7 +10,9 @@ class UserViewStore {
   }
 
   login(userName, password) {
-    return this._api.login(userName, password);
+    return this._api.login(userName, password).then(action((user) => {
+      this.currentUser = new User(user);
+    }));
   }
 
   register(username,firstName, lastName, email, password, birthDay, isFemale, isSingle) {

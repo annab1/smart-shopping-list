@@ -19,9 +19,9 @@ class LoginPage extends Component {
   render() {
     return (
       <div className="content-panel small login-page">
-        <h1 className="title">Login to your account</h1>
         <section className="padded-section">
           <img className="logo" src={require("../images/logo.png")} />
+          <h1 className="title">Login to your account</h1>
           <form className="login-form">
             <input type="text" placeholder="User name" value={this.state.userName} onChange={this.setUserName}/>
             <input type="password" placeholder="Password" value={this.state.password} onKeyUp={this.onKeyUp} onChange={this.setPassword}/>

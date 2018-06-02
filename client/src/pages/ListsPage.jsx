@@ -5,7 +5,7 @@ import Pages from "../constants/Pages";
 import ShoppingListTile from "../components/ShoppingListTile";
 import Spinner from "../components/Spinner";
 
-@inject("shoppingListViewStore")
+@inject("shoppingListViewStore", "userViewStore")
 @observer
 class ListsPage extends Component {
   constructor(props) {
@@ -13,6 +13,8 @@ class ListsPage extends Component {
 
     this.generateList = this.generateList.bind(this);
     this.loadList = this.loadList.bind(this);
+
+    this.state = { isLoading: false };
   }
 
   componentDidMount() {
@@ -22,25 +24,30 @@ class ListsPage extends Component {
   }
 
   render() {
-    const { shoppingListViewStore } = this.props;
+    const { shoppingListViewStore, userViewStore } = this.props;
 
-    if (!shoppingListViewStore.lists) {
+    if (!shoppingListViewStore.lists || this.state.isLoading) {
       return <Spinner/>;
     }
 
     return (
       <div className="content-panel">
         <section className="padded-section flex-col">
-          <button className="btn action-btn generate-list-btn"
-                  onClick={this.generateList}>Generate List</button>
-            <div className="shopping-lists">
-              {shoppingListViewStore.lists.map(list =>
-                <ShoppingListTile key={list.id}
-                                  list={list}
-                                  onClick={this.loadList}
-                />
-              )}
+          {userViewStore.currentUser &&
+          <h1 className="content-header">
+            <div>Hello {userViewStore.currentUser.firstName}, here are your lists:</div>
+          </h1>
+          }
+          <div className="shopping-lists">
+            {shoppingListViewStore.lists.map(list =>
+              <ShoppingListTile key={list.id}
+                                list={list}
+                                onClick={this.loadList}
+              />
+            )}
           </div>
+          <button className="btn action-btn generate-list-btn"
+                  onClick={this.generateList}>Generate New List</button>
         </section>
       </div>
     );
@@ -49,7 +56,10 @@ class ListsPage extends Component {
 
   generateList() {
     const { shoppingListViewStore } = this.props;
+    this.setState({ isLoading: true });
+
     shoppingListViewStore.generateList().then(() => {
+      this.setState({ isLoading: false });
       shoppingListViewStore.setCurrentPage(Pages.ShoppingList);
     });
   }

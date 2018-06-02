@@ -39,11 +39,11 @@ class ShoppingListPage extends Component {
     }
 
     return (
-      <div className="content-panel">
+      <div className="content-panel shopping-list-page">
         <BackButton page={Pages.ListsPage} />
-        <h1 className="title">
+        <div className="content-header">
           {this.renderTitle()}
-        </h1>
+        </div>
 
         <div className="header">
           <span className="checkbox" />
