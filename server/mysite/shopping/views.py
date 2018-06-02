@@ -12,23 +12,28 @@ import pandas as pd
 
 from models import UserData, ProductInstances, ShoppingList
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
 
 @csrf_exempt
 @csrf_exempt
 @csrf_exempt
+@api_view(['GET'])
 def get_categories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['GET'])
 def get_products(request):
     prefix_filter = request.GET["prefix"]
     products = Product.objects.all().filter(name__icontains=prefix_filter)
     serializer = ProductSerializer(products, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
@@ -50,7 +55,7 @@ def add_product(request):
     else:
         instances[0].amount += quantity
         instances[0].save()
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
@@ -61,7 +66,7 @@ def create_list(request):
 
     user = User.objects.get(id=1)
     ShoppingList.objects.create(name=name, user=user, date=datetime.now())
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 # The following code adds some products to the list for test purposes. IT SHOULD BE DELETED
@@ -84,6 +89,7 @@ def add_some_prodcuts_to_list(id):
 
 
 @csrf_exempt
+@api_view(['GET'])
 def generate_list(request):
     name = time.strftime("%d_%m_%Y")
     # TODO: request.user.id
@@ -99,56 +105,62 @@ def generate_list(request):
             ProductInstances.objects.create(shopping_list=list_instance,
                                             product=product, amount=amount)
     serializer = ShoppingListSerializer(list_instance)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['POST'])
 def update_list(request):
     params = json.loads(request.body)
     shopping_list = ShoppingList.objects.get(id=params['id'])
     shopping_list.name = params['name']
     shopping_list.save()
 
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['POST'])
 def remove_product(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
     product_id = params["product_id"]
     instance = \
         ProductInstances.objects.filter(shopping_list_id=list_id,
-                                           product_id=product_id).delete()
-    return HttpResponse('')
+                                        product_id=product_id).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['GET'])
 def get_shopping_list(request):
     list_id = request.GET["list_id"]
     list_instance = ShoppingList.objects.get(id=list_id)
     serializer = ShoppingListSerializer(list_instance)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['GET'])
 def get_shopping_lists(request):
     # TODO: request.user.id
     user = User.objects.get(id=1)
     list_instances = ShoppingList.objects.filter(user=user)
     serializer = ShoppingListSerializer(list_instances, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['GET'])
 def get_product_by_id(request):
     prod_id = request.GET["id"]
     product = Product.objects.all().filter(id=prod_id)[0]
     serializer = ProductSerializer(product)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @csrf_exempt
+@api_view(['POST'])
 def update_product_is_checked_val(request):
     params = json.loads(request.body)
     product_id = params["product_id"]
@@ -161,10 +173,11 @@ def update_product_is_checked_val(request):
     else:
         product_instance.is_checked = is_checked
         product_instance.save()
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
 
 
 @csrf_exempt
+@api_view(['POST'])
 def update_list_is_archived_val(request):
     params = json.loads(request.body)
     list_id = params["list_id"]
@@ -175,4 +188,4 @@ def update_list_is_archived_val(request):
     else:
         list_instance.is_archived = is_checked.lower() == 'true'
         list_instance.save()
-    return HttpResponse('')
+    return Response(status=status.HTTP_200_OK)
