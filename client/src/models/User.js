@@ -6,10 +6,9 @@ class User {
     this.firstName = config.firstName || "";
     this.lastName = config.lastName || "";
     this.email = config.email || "";
-    this.password = config.password || ""; //TODO: we probably shouldn't store the password
     this.birthDay = config.birth_date || null;
-    this.isFemale = config.isFemale;
-    this.isSingle = config.isSingle;
+    this.isFemale = config.gender === "F";
+    this.isSingle = config.relationship === "N";
     this.childrenCount = config.childrenCount;
   }
 

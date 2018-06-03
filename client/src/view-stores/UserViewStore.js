@@ -7,11 +7,23 @@ class UserViewStore {
 
   constructor() {
     this._api = ShoppingListApi;
+
+    this.getUser = this.getUser.bind(this);
   }
 
   login(userName, password) {
-    return this._api.login(userName, password).then(action((user) => {
-      this.currentUser = new User(user);
+    return this._api.login(userName, password).then(this.getUser);
+  }
+
+  getUser() {
+    return this._api.getUser().then(action((userData) => {
+      this.currentUser = new User(
+        {...userData.user,
+          id: userData.id,
+          birth_date: userData.birth_date,
+          gender: userData.gender,
+          relationship: userData.relationship
+        });
     }));
   }
 

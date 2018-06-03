@@ -90,6 +90,10 @@ class ShoppingListApi {
     });
   }
 
+  getUser() {
+    return this._get("get/userdata");
+  }
+
   getListProducts(listId) {
     return this._get(`list/get?list_id=${listId}`);
   }

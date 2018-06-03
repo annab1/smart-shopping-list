@@ -7,7 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import ListsPage from "../pages/ListsPage";
 import Spinner from "./Spinner";
 
-@inject("shoppingListViewStore")
+@inject("shoppingListViewStore", "userViewStore")
 @observer
 class Router extends Component {
   _pageComponents = {
@@ -20,7 +20,7 @@ class Router extends Component {
   componentDidMount() {
     const { shoppingListViewStore, userViewStore } = this.props;
 
-    shoppingListViewStore.getLists()
+    userViewStore.getUser()
       .then(() => {
         shoppingListViewStore.setCurrentPage(Pages.ListsPage);
       })
