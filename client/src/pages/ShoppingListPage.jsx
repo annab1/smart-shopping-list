@@ -16,6 +16,11 @@ class ShoppingListPage extends Component {
     return this.props.shoppingListViewStore.currentShoppingList.products.sort(p => p.isChecked);
   }
 
+  @computed
+  get isArchived() {
+    return this.props.shoppingListViewStore.currentShoppingList.isArchived;
+  }
+
   constructor(props) {
     super(props);
 
@@ -41,13 +46,11 @@ class ShoppingListPage extends Component {
     }
 
     return (
-      <div className="content-panel shopping-list-page">
+      <div className={classNames("content-panel shopping-list-page", {"archived" : this.isArchived})}>
+        {this.isArchived && <i className="fa fa-clipboard-check" /> }
         <BackButton page={Pages.ListsPage} />
         <div className="content-header">
           {this.renderTitle()}
-          <br/>
-            {this.props.shoppingListViewStore.currentShoppingList.isArchived ?
-                <i className="fa fa-clipboard-check closed-header">closed</i> : null}
         </div>
         <div className="header">
           <span className="checkbox" />
@@ -55,19 +58,20 @@ class ShoppingListPage extends Component {
           <span className="quantity">Amount</span>
           <span className="actions" />
         </div>
-        <ul className="products-list">
-          { this.sortedProducts.map(
-            listProduct =>
-              <li className="list-item" key={listProduct.product.name}>
-                <ShoppingListItem listProduct={listProduct} isArchived={shoppingListViewStore.currentShoppingList.isArchived}/>
-              </li>
-          ) }
-        </ul>
-
-          {this.props.shoppingListViewStore.isArchived?
-              null : <AddProduct /> }
-          {this.props.shoppingListViewStore.isArchived ?
-          null : <button type="button" className="btn action-btn add-btn" onClick={this.closeList}>Close List</button> }
+        <div className="main-content">
+          <ul className="products-list">
+            { this.sortedProducts.map(
+              listProduct =>
+                <li className="list-item" key={listProduct.product.name}>
+                  <ShoppingListItem listProduct={listProduct} isArchived={this.isArchived}/>
+                </li>
+            ) }
+          </ul>
+          {!this.isArchived &&
+          <AddProduct />}
+        </div>
+        {!this.isArchived &&
+        <button className="btn action-btn archive-btn" onClick={this.closeList}>Archive</button> }
       </div>
     );
   }
@@ -77,7 +81,8 @@ class ShoppingListPage extends Component {
 
     if (!this.state.editTitle) {
       return (
-        <span className="shopping-list-name" onClick={this.editTitle}>
+        <span className={classNames("shopping-list-name", { disabled: this.isArchived})}
+              onClick={this.editTitle}>
             {shoppingListViewStore.currentShoppingList.name}
           <span className="fa fa-pencil-alt" />
         </span>
@@ -98,7 +103,9 @@ class ShoppingListPage extends Component {
   }
 
   editTitle() {
-    this.setState({ editTitle: true , insertedName: this.props.shoppingListViewStore.currentShoppingList.name });
+    if (!this.isArchived) {
+      this.setState({ editTitle: true, insertedName: this.props.shoppingListViewStore.currentShoppingList.name});
+    }
   }
 
   onTitleChange(e) {
@@ -119,11 +126,9 @@ class ShoppingListPage extends Component {
     this.setState({ editTitle: false , insertedName: null });
   }
 
-    closeList() {
-        // const { firstName, lastName, email, password, birthDay, isFemale, isSingle, childrenCount } = this.state;
-        // const { shoppingListViewStore, userViewStore } = this.props;
-        this.props.shoppingListViewStore.closeList(true);
-    }
+  closeList() {
+    this.props.shoppingListViewStore.closeList(true);
+  }
 
 }
 

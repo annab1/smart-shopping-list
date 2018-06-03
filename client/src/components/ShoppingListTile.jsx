@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import cn from "classnames";
 
 const PREVIEW_PRODUCTS_COUNT = 5;
 
@@ -11,7 +12,10 @@ class ShoppingListTile extends Component {
   render() {
     const { list, onClick } = this.props;
     return (
-      <div className="shopping-list-tile" onClick={() => onClick(list)}>
+      <div
+        className={cn("shopping-list-tile", {archived: list.isArchived })}
+        onClick={() => onClick(list)}>
+        {list.isArchived && <i className="fa fa-clipboard-check" />}
         <div><strong>{list.name} </strong>{list.isArchived ? <i className="fa fa-clipboard-check"></i> : null}</div>
         <div className="small-text">{list.date.calendar()}</div>
         <ul className="table-list">

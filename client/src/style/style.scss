@@ -64,7 +64,7 @@
     height: 37px;
     flex-shrink: 0;
 
-    &:hover {
+    &:not(:disabled):hover {
       color: #ffffff;
       background-color: $layout-main-color;
     }
@@ -84,7 +84,7 @@
     background: transparent;
     outline: none;
 
-    &:hover {
+    &:not(:disabled):hover {
       color: $layout-main-color;
     }
   }

@@ -5,6 +5,7 @@ import moment from "moment";
 class ShoppingList {
   @observable products;
   @observable name;
+  @observable isArchived;
 
   constructor(config = {}) {
     this.id = config.id;

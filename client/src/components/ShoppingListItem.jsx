@@ -23,6 +23,7 @@ class ShoppingListItem extends Component {
       <div className={classNames("shopping-list-item", {"checked": listProduct.isChecked})}>
         <span className="checkbox">
           <input type="checkbox"
+                 disabled={isArchived}
                  id={listProduct.product.name + "checkbox"}
                  checked={listProduct.isChecked}
                  value={listProduct.isChecked}
@@ -31,16 +32,22 @@ class ShoppingListItem extends Component {
         </span>
         <span className="product">{listProduct.product.name}</span>
         <span className="quantity">
+          {!isArchived &&
           <button className="icon-btn" onClick={this.onMinusClicked}>
-            <span className="fa fa-minus" />
+            <span className="fa fa-minus"/>
           </button>
+          }
           <span className="amount-label">{listProduct.amount}</span>
-          <button className="icon-btn" onClick={this.onPlusClicked}>
-            <span className="fa fa-plus" />
+          {!isArchived &&
+          <button className="icon-btn" disabled={isArchived} onClick={this.onPlusClicked}>
+            <span className="fa fa-plus"/>
           </button>
+          }
         </span>
         <span className="actions">
-          <DeleteButton onDelete={this.removeProduct}/>
+          {!isArchived &&
+          <DeleteButton onDelete={this.removeProduct} disabled={isArchived}/>
+          }
         </span>
       </div>
     );

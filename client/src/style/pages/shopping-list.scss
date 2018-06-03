@@ -7,8 +7,30 @@
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    flex-shrink: 0;
   }
 
+
+  .archive-btn {
+    flex-shrink: 0;
+    margin: 10px;
+  }
+}
+
+.archived {
+  background-color: $archived-color;
+
+  .fa-clipboard-check {
+    font-size: 150px;
+    position: absolute;
+    z-index: 0;
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #c7c1c1;
+    opacity: 0.5;
+  }
 }
 
 .closed-header {
@@ -49,7 +71,8 @@
   }
 }
 
-.products-list {
+.main-content {
+  flex-grow: 1;
   overflow-y: auto;
 }
 
@@ -61,7 +84,11 @@
   text-overflow: ellipsis;
   min-width: 0;
 
-  &:hover {
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &:not(.disabled):hover {
     border: 1px solid $text-color;
     border-radius: 3px;
     .fa {

@@ -27,16 +27,16 @@ class ShoppingListApi {
   }
 
   register(user) {
-      return this._post("user/create/", {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        gender: user.isFemale ? "F" : "M",
-        birth_date: user.birthDay,
-        relationship: user.isSingle ? "S" : "N"
-      });
+    return this._post("user/create/", {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      first_name: user.firstName,
+      last_name: user.lastName,
+      gender: user.isFemale ? "F" : "M",
+      birth_date: user.birthDay,
+      relationship: user.isSingle ? "S" : "N"
+    });
   }
 
   addProduct(listId, productId, quantity) {
@@ -83,12 +83,12 @@ class ShoppingListApi {
     });
   }
 
-    archiveList(listId, archiveValue) {
-        return this._post("list/archive", {
-            list_id: listId,
-            value: archiveValue
-        });
-    }
+  archiveList(listId, archiveValue) {
+    return this._post("list/archive", {
+      list_id: listId,
+      value: archiveValue
+    });
+  }
 
   getListProducts(listId) {
     return this._get(`list/get?list_id=${listId}`);

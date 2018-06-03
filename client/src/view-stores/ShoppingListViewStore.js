@@ -12,7 +12,6 @@ class ShoppingListViewStore {
 
   constructor() {
     this._api = ShoppingListApi;
-    this.isArchived = this.currentShoppingList.isArchived;
     this.generateList = this.generateList.bind(this);
   }
 
@@ -70,10 +69,9 @@ class ShoppingListViewStore {
   }
 
   closeList(value) {
-      return this._api.archiveList(this.currentShoppingList.id, value).then(action(() => {
+    return this._api.archiveList(this.currentShoppingList.id, value).then(action(() => {
       this.currentShoppingList.isArchived = value;
-      this.isArchived = true;
-  }));
+    }));
   }
 
 }
