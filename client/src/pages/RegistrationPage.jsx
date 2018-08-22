@@ -53,10 +53,6 @@ class RegistrationPage extends Component {
     this.setState({email: event.target.value});
   }
 
-  childrenChanged(event) {
-    this.setState({childrenCount: event.target.value});
-  }
-
   passwordChanged(event) {
     this.setState({password: event.target.value});
   }
