@@ -71,26 +71,6 @@ def create_list(request):
                                 date=datetime.now())
     return Response(status=status.HTTP_200_OK)
 
-
-# The following code adds some products to the list for test purposes. IT SHOULD BE DELETED
-@csrf_exempt
-def add_some_prodcuts_to_list(id):
-    list_id = id
-    product_id = 2
-    quantity = 2
-    list_instance = ShoppingList.objects.get(id=list_id)
-    product_instance = Product.objects.get(id=product_id)
-    instances = ProductInstances.objects.all().filter(
-        shopping_list=list_instance, product=product_instance)
-    if len(instances) == 0:
-        ProductInstances.objects.create(shopping_list=list_instance,
-                                        product=product_instance,
-                                        amount=quantity)
-    else:
-        instances[0].amount += quantity
-        instances[0].save()
-
-
 @csrf_exempt
 @api_view(['GET'])
 @login_required(login_url="/denied/")

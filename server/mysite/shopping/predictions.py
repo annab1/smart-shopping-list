@@ -68,8 +68,6 @@ def aggregate_data(user_id, product_id):
         content.append(
             float(product_for_date[0].amount) if product_for_date else float(0))
     return content
-    # URLS - https://stackoverflow.com/questions/11697887/converting-django-queryset-to-pandas-dataframe
-    #  https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python
 
 
 def predict_single_product(user_id, product_id):
